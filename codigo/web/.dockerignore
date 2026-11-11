@@ -1,0 +1,3 @@
+# Archivos que NO deben entrar en la imagen Docker ni en el repositorio.
+.env
+*.log

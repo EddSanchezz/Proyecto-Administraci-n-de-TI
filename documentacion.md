@@ -135,7 +135,7 @@ docker exec -it <contenedor_db> psql -U itec_app -d itec -c "\dt"
 
 ## 7. Servicio NFS
 
-**Procedimiento** — exportar `/srv/compartido` (ver `analisis.md`, sección 6)
+**Procedimiento** — script: `codigo/instalacion/04_instalar_nfs.sh` · configuración: `codigo/configuraciones/exports` (crea el árbol y los grupos; exporta `academicos` y `publico` solo para la LAN, NFSv4 único en 2049/tcp)
 
 ```
 sudo apt install nfs-kernel-server -y
@@ -160,13 +160,7 @@ df -h /mnt/academicos
 
 ## 8. Servicio NIS
 
-**Procedimiento**
-
-```
-sudo apt install nis -y
-sudo nano /etc/yp.conf            # ypserver localhost · dominio itec.local
-sudo dpkg-reconfigure nis
-```
+**Procedimiento** — script: `codigo/instalacion/05_instalar_nis.sh` (dominio `itec.local`, `ypserv` en 834, `securenets` para la LAN, mapas con contraseñas fusionadas) · alta/baja de estudiantes por lote: `codigo/configuraciones/usuarios_nis.sh`
 
 **Verificación**
 
@@ -183,14 +177,7 @@ ypwhich                           # servidor NIS en uso
 
 ## 9. Servicio CUPS
 
-**Procedimiento**
-
-```
-sudo apt install cups -y
-sudo usermod -aG lpadmin $USUARIO
-sudo nano /etc/cups/cupsd.conf    # Listen 0.0.0.0:631
-sudo systemctl enable --now cups
-```
+**Procedimiento** — script: `codigo/instalacion/06_instalar_cups.sh` · configuración: `codigo/configuraciones/cupsd.conf` (incluye la impresora virtual PDF para evidenciar colas sin impresora física)
 
 **Verificación:** administrar impresoras en `https://192.168.1.10:631`; imprimir página de prueba desde un cliente.
 
@@ -202,15 +189,7 @@ sudo systemctl enable --now cups
 
 ## 10. Servicio Samba
 
-**Procedimiento**
-
-```
-sudo apt install samba smbclient -y
-sudo nano /etc/samba/smb.conf     # recursos: secretaria, contabilidad, academicos, publico
-sudo mkdir -p /srv/compartido
-sudo smbpasswd -a usuario
-sudo systemctl enable --now smbd
-```
+**Procedimiento** — script: `codigo/instalacion/07_instalar_samba.sh` · configuración: `codigo/configuraciones/smb.conf` (recursos por grupo POSIX; SMB directo en 445, sin NetBIOS)
 
 **Verificación**
 
@@ -227,8 +206,8 @@ smbclient //192.168.1.10/secretaria -U usuario
 
 ## 11. Firewall y respaldos (extras)
 
-- [ ] Aplicar reglas UFW — script: `codigo/seguridad/ufw_reglas.sh`
-- [ ] Programar respaldo semanal de `/srv/compartido` + volcado de PostgreSQL
+- [ ] Aplicar reglas UFW — script: `codigo/seguridad/ufw_reglas.sh` (incluye el filtrado `DOCKER-USER` de los puertos que publica Docker)
+- [ ] Programar respaldo semanal de `/srv/compartido` + volcado de PostgreSQL — script: `codigo/seguridad/respaldo.sh` (instalar con `sudo ./respaldo.sh --instalar`)
 
 **Verificación**
 

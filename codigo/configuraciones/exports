@@ -1,0 +1,24 @@
+# ============================================================================
+# exports - Exportaciones NFS del servidor ITEC
+# ----------------------------------------------------------------------------
+# Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
+# Instituto Tecnico de Educacion Comfenalco Quindio
+#
+# Este bloque se anade a /etc/exports con 04_instalar_nfs.sh.
+#
+# Solo se exportan las carpetas que el diseño reserva para las salas Linux
+# (analisis.md, seccion 6): academicos y publico. Las carpetas de secretaria
+# y contabilidad se comparten unicamente por Samba (445/tcp) para Windows.
+#
+# Opciones de seguridad:
+#   rw                  lectura y escritura para clientes de la red
+#   sync                respeta el orden de escritura (consistencia)
+#   no_subtree_check    evita verificar subarboles al renombrar (rendimiento)
+#   root_squash         el uid 0 del cliente se mapea a nobody (seguridad)
+#   no_crossmnt         no monta automaticamente exportaciones cruzadas
+# ============================================================================
+
+# === PROYECTO ITEC - exportaciones para las salas Linux ===
+/srv/compartido/academicos  192.168.1.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
+/srv/compartido/publico     192.168.1.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
+# === FIN PROYECTO ITEC ===

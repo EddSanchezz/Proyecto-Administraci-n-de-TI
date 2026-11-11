@@ -1,0 +1,65 @@
+# ============================================================================
+# docker-compose.yml - Pila web del proyecto ITEC (pruebas locales en la VM)
+# ----------------------------------------------------------------------------
+# Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
+# Instituto Tecnico de Educacion Comfenalco Quindio
+#
+# Dos servicios:
+#   web : sitio institucional PHP 8.3 + Apache (construido con ./Dockerfile).
+#   db  : PostgreSQL 16 con el esquema de codigo/web/db/init.sql.
+#
+# Este compose sirve para desplegar la pila completa en la VM sin Dokploy
+# (una sola instruccion: docker compose up -d --build). En el flujo con
+# Dokploy la misma aplicacion se despliega desde Git con el mismo
+# Dockerfile, y la base de datos se crea como servicio PostgreSQL de
+# Dokploy aplicando el mismo init.sql.
+#
+# Puertos publicados en la VM:
+#   8080 -> 80 : sitio web (80 y 443 los ocupa Traefik de Dokploy; en el
+#                flujo Dokploy el sitio se publica por Traefik en 80/443).
+#   5432 -> 5432 : PostgreSQL, restringido a la LAN por UFW y DOCKER-USER.
+#
+# Credenciales: SIEMPRE por archivo .env (copia de .env.example).
+# ============================================================================
+
+services:
+  web:
+    build: .
+    container_name: itec-web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_NAME: ${POSTGRES_DB}
+      DB_USER: ${POSTGRES_USER}
+      DB_PASS: ${POSTGRES_PASSWORD}
+    ports:
+      - "8080:80"
+
+  db:
+    image: postgres:16-alpine
+    container_name: itec-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      # Zona horaria correcta para los sellos de tiempo de preinscripciones.
+      TZ: America/Bogota
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      # init.sql solo se ejecuta la primera vez (directorio oficial de la imagen).
+      - ./db/init.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:

@@ -20,20 +20,90 @@
 | Aspecto | Descripción |
 |---|---|
 | **Nombre** | Instituto Técnico de Educación Comfenalco Quindío |
-| **Naturaleza** | Institución de formación para el trabajo y el desarrollo humano, creada y operada por la Caja de Compensación Familiar Comfenalco Quindío (marco de la Ley 115 de 1994) |
+| **Naturaleza** | Institución de formación para el trabajo y el desarrollo humano, creada y operada por la Caja de Compensación Familiar Comfenalco Quindío; opera como área de servicio subsidiado de la Caja (marco de la Ley 115 de 1994) |
+| **NIT / representante legal** | 890000381-0 / José Fernando Montes Salazar (PEI 2024) |
 | **Ubicación** | Sede en la Calle 23 con Carrera 23, esquina (Armenia, Quindío); nueva sede en el barrio Granada (Cra. 22 # 10-35) |
-| **Inicio de actividades** | 1997, con el programa Secretariado Auxiliar Contable Sistematizado |
-| **Licencias de funcionamiento** | Resoluciones 1630 de 2007, 1712 de 2020 y 2714 de 2025 |
-| **Oferta académica** | Programas técnicos laborales, cursos cortos, talleres, diplomados, capacitación empresarial y evaluación/certificación por competencias laborales |
-| **Programas técnicos laborales** | Secretariado Auxiliar Contable, Auxiliar Contable y Financiero, Auxiliar de Talento Humano, Electricista en Construcción Residencial, Liniero de Redes de Energía, Operario de Confección, Manicurista y Pedicurista, Peluquería, Preparación de Alimentos y Manejo de Herramientas para Codificación de Software |
-| **Proceso de admisión y matrícula** | Preinscripción, entrevista y presentación de documentación; edad mínima 15 años (18 para Liniero de Redes de Energía); tarifas diferenciadas por categoría de afiliación a la Caja (A, B, C, no afiliado) |
-| **Reglamentación pública** | Proyecto Educativo Institucional (PEI) y Reglamento Estudiantil publicados en PDF en el sitio de Comfenalco Quindío |
-| **Contacto oficial** | institutotecnico@cqteduca.edu.co · PBX 606 731 4001 (opc. 7 Educación / opc. 1 Instituto) |
-| **Dependencia organizacional** | Departamento Instituto Técnico, adscrito a la Gerencia de Educación de Comfenalco Quindío |
+| **Inicio de actividades** | 1997, con el programa Secretariado Auxiliar Contable Sistematizado (la Caja ofrece capacitación desde 1967) |
+| **Licencia de funcionamiento** | Resolución 1712 del 8 de septiembre de 2020, expedida por la Secretaría de Educación Municipal de Armenia (antecedente: 1630 de 2007; el sitio web registra además la 2714 de 2025) |
+| **Oferta académica** | Once programas técnicos laborales, programas de educación informal de menos de 160 horas (once áreas), capacitaciones empresariales y oferta virtual vía Moodle desde 2023 |
+| **Programas técnicos laborales** | Auxiliar de Talento Humano, Auxiliar de Recursos Humanos, Auxiliar Contable y Financiero, Secretariado Auxiliar Contable, Auxiliar de Cartera y Cobranzas, Electricista en Construcción Residencial, Liniero en Redes de Energía, Operario de Confección, Peluquería, Manicurista y Pedicurista, y Preparatorio Musical (conocimientos académicos) |
+| **Jornadas y modalidad** | Diurna, nocturna y sabatina; presencial con trabajo virtual (80/20 sabatinos, 90/10 de lunes a viernes) |
+| **Proceso de admisión y matrícula** | Preinscripción con autorización de tratamiento de datos, entrevista de ingreso (único criterio de admisión en técnicos) y documentación; pruebas adicionales para Preparatorio Musical y Liniero en Redes de Energía; edad mínima 15 años (18 para Liniero); tarifas diferenciadas por categoría de afiliación a la Caja (A, B, C, no afiliado) |
+| **Reglamentación pública** | PEI (versión 010, código C-DECYB-0006, 2024-04-11) y Reglamento Estudiantil (versión 007, código I-ED-0001, 2024-04-16), publicados en PDF en el sitio de Comfenalco Quindío |
+| **Contacto oficial** | institutotecnico@comfenalcoquindio.co · 606 736 8976 (PEI 2024); PBX Comfenalco 606 731 4001 (opc. 7 Educación / opc. 1 Instituto) |
+| **Dependencia organizacional** | Departamento Instituto Técnico, adscrito a la Gerencia de Educación de Comfenalco Quindío; la infraestructura tecnológica se rige por el área de Transformación Digital de la Caja |
+| **Sistemas académicos actuales** | Administrador Educativo (por contrato de concesión) para inscripción en línea y registro académico; plataforma virtual Moodle (concesión) |
 
-El PEI y el Reglamento Estudiantil públicos son la fuente de datos reales para este análisis y para el contenido del sitio web (programas, estructura, admisión y matrícula), sin necesidad de solicitar información adicional a la institución.
+El PEI y el Reglamento Estudiantil públicos son la fuente de datos reales para este análisis y para el contenido del sitio web (programas, estructura, admisión y matrícula), sin necesidad de solicitar información adicional a la institución. La sección 1.2 resume los datos verificados en ambos documentos.
 
-### 1.2 Escenario de infraestructura de TI del proyecto
+### 1.2 Datos verificados en el PEI y el Reglamento Estudiantil
+
+#### Identificación y trayectoria (PEI, capítulo 1)
+
+- Identificación oficial (PEI 1.1): NIT 890000381-0; representante legal José Fernando Montes Salazar; dirección Calle 23 carrera 23, esquina (Armenia); teléfono 6067368976; correo institutotecnico@comfenalcoquindio.co; naturaleza privada; modalidad presencial; jornadas diurna, nocturna y sabatina; licencia de funcionamiento 1712 del 8 de septiembre de 2020.
+- Trayectoria: la Caja ofrece capacitación desde 1967; el Instituto inicia labores en 1997 con el programa Secretariado Auxiliar Contable Sistematizado; mantiene certificación de calidad ISO 9001 desde 2013 y programas certificados bajo las normas NTC 5555, NTC 5581 y NTC 5666.
+- El PEI no define misión y visión propias del Instituto: su gestión se alinea con el direccionamiento estratégico corporativo de Comfenalco Quindío (documento I-DA-0003), cuyo propósito es "generar bienestar integral y prosperidad colectiva" y cuya Mega 2025 es impactar socialmente al 94% de la población afiliada (Reglamento).
+
+#### Oferta académica (PEI, secciones 2.1 a 2.3)
+
+Programas técnicos laborales vigentes, todos con jornadas diurna, nocturna y sabatina:
+
+| Programa | Registro / reconocimiento | Duración |
+|---|---|---|
+| Técnico Laboral en Auxiliar de Recursos Humanos | Resolución 3838 de noviembre 25 de 2016 | 900 horas |
+| Técnico Laboral Auxiliar Contable y Financiero | Resoluciones 63-01673 de 2020 y 0964 del 23 de junio de 2021 | 1.780 horas |
+| Conocimientos académicos en Preparatorio Musical | Resolución 1508 del 24 de julio de 2020 | 576 horas |
+| Técnico Laboral Liniero en Redes de Energía | Resolución 1509 del 24 de julio de 2020 | 900 horas |
+| Técnico Laboral en Auxiliar de Cartera y Cobranzas | Resolución 1809 del 22 de septiembre de 2020 | 900 horas |
+| Técnico Laboral en Secretariado Auxiliar Contable | Resoluciones 3072 de 2014 y 0968 del 23 de junio de 2021 | 1.780 horas |
+| Técnico Laboral en Electricista Construcción Residencial | Resoluciones 3069 de 2014 y 0963 del 23 de junio de 2021 | 900 horas |
+| Técnico Laboral en Peluquería | Resolución 0967 del 23 de junio de 2021 | 900 horas |
+| Técnico Laboral en Operario de Confección | Resolución 1604 del 28 de julio de 2022 | 900 horas |
+| Técnico Laboral en Manicurista y Pedicurista | Resolución 1685 del 11 de julio de 2023 | 700 horas |
+| Técnico Laboral en Auxiliar de Talento Humano | Resoluciones 1685 de 2023 y 63-00797 de 2023 | 1.780 horas |
+
+- Educación informal (PEI 2.1.2): cursos vocacionales de menos de 160 horas que no conducen a título y entregan constancia de asistencia; once áreas: artística, baile, belleza, cocina y nutrición, confección, descanso, emprendimiento, manualidades, música, sistemas y sostenibilidad.
+- Capacitaciones empresariales (PEI 2.1.3): se orientan en las instalaciones del Instituto o de la empresa contratante.
+- Población objeto (PEI 2.3): trabajadores afiliados a la Caja y su núcleo familiar, con prioridad en las categorías A y B, población no afiliada y empresas afiliadas o no afiliadas.
+- Tarifas (PEI 2.2): aprobadas anualmente por el Consejo Directivo de la Caja; formas de pago: contado, credisubsidio, pagos o transferencias electrónicas, crédito directo con Comfenalco y financiación con fondo de garantías.
+
+#### Jornadas y modalidad (PEI, sección 2.5)
+
+| Jornada | Horario | Hora académica | Intensidad |
+|---|---|---|---|
+| Diurna | 7:00 a.m. a 11:30 a.m. y 1:30 p.m. a 6:00 p.m. | 50 minutos | 25 horas semanales; 18 semanas por periodo |
+| Nocturna | 6:00 p.m. a 10:00 p.m. | 45 minutos | 25 horas semanales; 18 semanas por periodo |
+| Sabatina | 7:00 a.m. a 12:00 m. y 1:00 p.m. a 5:00 p.m. | 45 minutos | 11 horas por sábado; promedio de cuatro periodos (dos años) |
+
+- Modalidad: presencial con trabajo virtual (80% presencial / 20% virtual en sabatinos; 90% / 10% de lunes a viernes); la oferta virtual opera en Moodle desde 2023.
+
+#### Procesos académicos (PEI 2.6 a 2.12 y 3.1; Reglamento, capítulos IV a VI)
+
+- Inscripción (PEI 3.1.2.1): presencial en las instalaciones o en línea desde la plataforma del Administrador Educativo; la recepcionista o la persona designada por rectoría programa la entrevista.
+- Admisión (PEI 3.1.2.2): entrevista con el Coordinador de Bienestar Institucional; es el único criterio y evalúa relaciones interpersonales, personalidad, motivación de ingreso, afinidad con el programa y aspiración académica. Preparatorio Musical exige prueba de conocimientos y Liniero en Redes de Energía exige prueba y entrevista.
+- Matrícula (PEI 3.1.2.3; Reglamento, arts. 33 y 34): efectiva con el pago en cursos vocacionales; en técnicos requiere admisión, documentación y pago según categoría de afiliación. Se renueva cada periodo con paz y salvo de la Coordinación Académica y Tesorería.
+- Evaluación (PEI 2.6): Conocimiento 35%, Desempeño 35% y Producto 30%; escala de 0.0 a 5.0; competente con 3.5 o más. El Reglamento regula los planes de mejoramiento (nota entre 1.5 y 3.5), el curso de recuperación (entre 2.0 y 3.5, con costo) y la repetición de módulos.
+- Certificación (PEI 2.11): constancia de asistencia en educación informal con asistencia mínima del 80% (en virtual, 100% de las actividades y 80% de los encuentros sincrónicos); en técnicos, el comité de certificación verifica el estado académico y se entrega el Certificado de Aptitud Ocupacional con registro en el libro de actas (programa, resolución, intensidad, fecha, graduandos y documentos).
+- Pasantías (PEI 2.7.4): contrato de aprendizaje de seis meses bajo la Ley 789 de 2002 en los programas Secretariado Auxiliar Contable, Auxiliar Contable y Financiero (900 horas lectivas más 880 de etapa productiva) y Auxiliar de Talento Humano; incluye inducción, remisión de hojas de vida e informes de seguimiento.
+- Egresados (PEI 2.12): seguimiento a los seis meses de la graduación y encuesta cada dos años a todas las cohortes (requisitos NTC 5581).
+
+#### Organización y sistemas de información (PEI, capítulo 3)
+
+- Archivo académico (PEI 3.2): todo el registro académico (matrículas, pensum, notas, asistencia, pasantías) reside en el Administrador Educativo; existe libro de grados y actas de grado; las constancias se expiden con verificación en el sistema y visto bueno de la coordinación académica.
+- Planta de personal (PEI 3.4.1): perfiles de cargo documentados para la planta completa (dieciséis perfiles más vigilancia), entre ellos rectoría, coordinaciones académica, de vocacionales y de bienestar institucional, asistentes, docentes, secretaría y el cargo propio de tecnología: auxiliar de gestión TIC (perfil F-UE-0017).
+- Finanzas (PEI 3.5): presupuesto anual aprobado por el Consejo Directivo de la Caja; ingresos por matrículas técnicas, cursos vocacionales, capacitaciones, convenios y el aporte del 4%; informe anual de costos a la Secretaría de Educación.
+- Tecnología (PEI 3.3): el mantenimiento de la infraestructura tecnológica lo dicta el área de Transformación Digital de la Caja y el locativo el área de Infraestructura; el administrador educativo y la plataforma virtual operan por contratos de concesión; los proveedores de software académico se evalúan por soporte, disponibilidad y facilidad de uso (Anexo 1 del PEI).
+
+#### Reglamento Estudiantil (versión 007, código I-ED-0001, 2024-04-16)
+
+- Naturaleza: institución de educación para el trabajo y el desarrollo humano, bajo la autoridad de la Secretaría de Educación Municipal de Armenia y el Ministerio de Educación Nacional.
+- Define aspirante, admisión, matrícula y clases de estudiante (nuevo, en continuidad, reingreso); la matrícula se invalida por inexactitud de datos y la condición de estudiante se pierde por no renovación, cancelación voluntaria o expulsión decidida por el Consejo Académico.
+- Consagra 24 derechos y 22 deberes del estudiante, entre ellos conocer el reglamento, recibir retroalimentación en máximo ocho días, obtener certificaciones y carnet estudiantil, asistir puntualmente según horarios y llamado a lista, y estar a paz y salvo.
+- Cancelación del periodo: devolución del 75% solo dentro de la primera semana; en informal, si la asistencia no supera el 20%, devolución del 75%; el trabajo intermodular es requisito del certificado y su sustentación extemporánea (hasta tres años) cuesta el 10% del valor del semestre (categoría C).
+
+Estos datos alimentan directamente el diseño: el sitio web publica la oferta y los procesos verificados (sección 3.2), el formulario de preinscripción replica los datos que el Instituto exige, incluida la autorización de tratamiento de datos personales (PEI 3.1.1), el árbol compartido refleja las dependencias académicas y administrativas (sección 6) y las colas de impresión atienden la expedición de constancias y certificados (sección 3.6).
+
+### 1.3 Escenario de infraestructura de TI del proyecto
 
 Como equipo consultor, proponemos e implementamos la infraestructura sobre el escenario de trabajo del curso: un servidor local que centraliza la gestión de servicios web, archivos, impresión, sincronización de tiempo, autenticación de usuarios y acceso compartido. El mapeo de servicios con la operación del instituto es el siguiente:
 
@@ -42,7 +112,7 @@ Como equipo consultor, proponemos e implementamos la infraestructura sobre el es
 - **Impresión de certificados, constancias y material didáctico**: requiere un servidor de impresión centralizado con colas administrables (**CUPS**).
 - **Formulario de inscripción en línea** conectado a una base de datos propia (**PostgreSQL**), desplegado junto al sitio institucional (**Dokploy**).
 
-### 1.3 Necesidades identificadas
+### 1.4 Necesidades identificadas
 
 | # | Necesidad | Impacto actual |
 |---|---|---|
@@ -74,13 +144,14 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 - **Qué aporta:** plataforma autohospedada y gratuita que, sobre Docker, ofrece despliegue desde Git, proxy inverso (Traefik), certificados SSL automáticos, gestión de bases de datos (incluye PostgreSQL) y dominios desde un panel web.
 - **Alternativas descartadas:** despliegue manual con Docker/Nginx (requiere expertiz que el instituto no tiene dedicada y es propenso a errores); PaaS públicos tipo Heroku/Vercel (costo recurrente en dólares y datos de estudiantes fuera de la institución); contratar administrador DevOps (costo laboral).
 - **Beneficio para el instituto:** el personal de la Gerencia de Educación puede desplegar el sitio web hoy y las aplicaciones académicas de mañana (p. ej., consulta de certificados) desde una interfaz gráfica, sin línea de comandos.
+- **Criterio de éxito:** panel de Dokploy operativo desde la LAN, con la aplicación del sitio web desplegada desde Git y en ejecución como contenedor, y su base de datos PostgreSQL creada y asociada desde el propio panel.
 
 ### 3.2 Sitio web institucional — Nginx (contenedor vía Dokploy)
 
 - **Necesidad:** N1.
 - **Qué aporta:** sitio con la oferta académica real tomada del PEI: programas técnicos laborales, requisitos y proceso de admisión y matrícula (preinscripción, entrevista, documentación), tarifas por categoría de afiliación, horarios y canales de contacto; incluye el formulario de preinscripción conectado a PostgreSQL. Se sirve por HTTPS detrás de Traefik.
 - **Por qué Nginx:** extremadamente ligero para contenido mayoritariamente estático, estándar de la industria y de bajo consumo en un servidor de 2 vCPU.
-- **Criterio de éxito:** accesible vía HTTPS con contenido relevante para la institución (programas, admisión, matrícula, contacto).
+- **Criterio de éxito:** sitio accesible por HTTPS con la oferta real del PEI (los once programas técnicos con duración, jornadas, tarifas y proceso de admisión) y el formulario de preinscripción guardando registros en PostgreSQL.
 
 ### 3.3 NTP — servidor de tiempo
 
@@ -88,12 +159,14 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 - **Qué aporta:** el servidor se sincroniza contra `pool.ntp.org` y se convierte en la fuente de hora única de la red local (puerto 123/UDP); las estaciones Windows y Linux apuntan a él.
 - **Por qué importa en el instituto:** los registros de matrícula, la expedición de certificados y constancias, y los respaldos requieren marcas de tiempo consistentes y verificables.
 - **Alternativas descartadas:** que cada equipo sincronice por su cuenta contra internet (deriva entre equipos, tráfico innecesario y dependencia del proveedor).
+- **Criterio de éxito:** servidor sincronizado con `pool.ntp.org` (estado y estrato visibles con `ntpq -p`) y al menos un cliente Windows y un cliente Linux obteniendo la hora desde 192.168.1.10 con desviación menor a un segundo.
 
 ### 3.4 NFS — compartición de archivos para las salas Linux
 
 - **Necesidad:** N2 y N3 (estaciones Linux de las salas de informática).
 - **Qué aporta:** exporta el árbol `/srv/compartido/academicos` por NFSv4 (puerto 2049) para que las salas Linux monten los directorios de trabajo como una unidad local: los estudiantes acceden a sus trabajos desde cualquier sala, con permisos por grupo (estudiantes, docentes).
 - **Alcance:** exportación restringida a la subred 192.168.1.0/24.
+- **Criterio de éxito:** una estación Linux monta `/srv/compartido/academicos` por NFSv4 y un archivo creado en una sala queda disponible al iniciar sesión desde otra sala (persistencia verificada en el servidor).
 
 ### 3.5 NIS — autenticación centralizada para las salas Linux
 
@@ -101,23 +174,26 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 - **Qué aporta:** un solo dominio de credenciales para las estaciones Linux de las salas: altas y bajas de cuentas estudiantiles en un único punto, con grupos por rol (estudiantes, docentes, administrativos). La rotación total de estudiantes por periodo académico se administra con scripts sobre el servidor, no sala por sala.
 - **Alternativas descartadas:** LDAP/OpenLDAP o Active Directory (más robustos, pero sobredimensionados para las salas Linux y el tamaño de la dependencia; requieren mayor mantenimiento).
 - **Limitación aceptada conscientemente:** NIS es un protocolo legado sin cifrado; se mitiga limitándolo estrictamente a la LAN y con UFW (puerto 834 solo para la subred). Los equipos Windows de administración y secretaría usan Samba con credenciales propias; un directorio corporativo completo queda fuera del alcance y del presupuesto de esta fase.
+- **Criterio de éxito:** una cuenta creada únicamente en el servidor permite iniciar sesión en las estaciones Linux de las salas con su directorio personal, y los puertos 834 y 111 responden solo dentro de la subred (verificado con UFW).
 
 ### 3.6 CUPS — servidor de impresión
 
 - **Necesidad:** N4.
 - **Qué aporta:** las impresoras se conectan al servidor; CUPS publica colas IPP (puerto 631) utilizables desde Windows y Linux, con administración web (`https://192.168.1.10:631`) y registro de trabajos.
 - **Beneficio:** la secretaría imprime certificados y constancias desde su cola, los docentes imprimen material didáctico desde las salas, y queda trazabilidad del gasto de impresión.
+- **Criterio de éxito:** la cola se publica en `ipp://192.168.1.10:631`, es utilizable desde un cliente Windows y uno Linux, y los trabajos enviados quedan registrados en la interfaz de administración.
 
 ### 3.7 Samba — compartición de archivos para Windows
 
 - **Necesidad:** N2 y N3 (equipos Windows de administración y secretaría académica).
 - **Qué aporta:** exporta el **mismo árbol `/srv/compartido`** por SMB/CIFS (puerto 445) con carpetas por dependencia y `valid users` por grupo: NFS y Samba sirven los mismos datos, evitando duplicación entre plataformas.
 - **Decisión de diseño:** deshabilitar NetBIOS legado (puertos 137–139) usando solo SMB sobre 445, soportado nativamente por Windows, macOS y Linux modernos.
+- **Criterio de éxito:** las carpetas (`\\itec-server\secretaria`, `contabilidad`, `publico`) accesibles desde Windows solo con usuarios válidos del grupo correspondiente, permisos diferenciados por carpeta y puertos 137–139 cerrados (verificado con UFW).
 
 ### 3.8 Base de datos — PostgreSQL vía Dokploy
 
 - **Necesidad:** N1 (formulario de preinscripción) y base para las aplicaciones académicas de N7.
-- **Qué aporta:** base de datos relacional provisionada y administrada desde el panel de Dokploy; accesible solo desde la red interna (puerto 5432 no expuesto a internet). En ella se registran los aspirantes del formulario de inscripción.
+- **Qué aporta:** base de datos relacional provisionada y administrada desde el panel de Dokploy; accesible solo desde la red interna (puerto 5432 no expuesto a internet). En ella se registran los aspirantes del formulario de inscripción con los datos que el PEI exige para la preinscripción: identificación, programa y jornada de interés, categoría de afiliación y autorización de tratamiento de datos personales.
 - **Por qué PostgreSQL:** motor robusto y sin costo de licencia, soportado de forma nativa por Dokploy, con tipografía de datos adecuada para el registro de aspirantes (documentos, categorías de afiliación, programa de interés).
 - **Criterio de éxito:** base de datos creada y conectada a la aplicación web (las preinscripciones quedan persistidas).
 
@@ -126,15 +202,16 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 - **Necesidad:** N8.
 - **Qué aporta:** nombre público con **DNS dinámico gratuito** (DuckDNS, propuesto: `itec-quindio.duckdns.org`) que apunta al servidor; certificado **Let's Encrypt** emitido y renovado automáticamente por Dokploy/Traefik para HTTPS. Como alternativa inmediata para pruebas internas, certificado autofirmado generado por script (`codigo/ssl/`).
 - **Por qué esta combinación:** costo cero, renovación automática y sin advertencias de navegador una vez el dominio resuelva.
+- **Criterio de éxito:** `itec-quindio.duckdns.org` resuelve hacia la IP pública del servidor, el sitio responde por HTTPS con certificado válido (o autofirmado en pruebas internas) y el puerto 80 únicamente redirige a 443.
 
 ### 3.10 Mejoras opcionales (puntos extra)
 
-| Mejora | Descripción |
-|---|---|
-| **Firewall UFW** | política *default deny*; solo se habilitan los puertos de la tabla de requisitos, y los servicios internos solo para la subred |
-| **Docker Compose** | el sitio web y la base de datos se versionan con `docker-compose.yml` para despliegue reproducible |
-| **Respaldos automáticos** | tarea programada (cron) que respalda `/srv/compartido` y vuelca la base de datos |
-| **Monitoreo básico** | verificación periódica de servicios activos con alertas |
+| Mejora | Descripción | Criterio de éxito |
+|---|---|---|
+| **Firewall UFW** | política *default deny*; solo se habilitan los puertos de la tabla de requisitos, y los servicios internos solo para la subred | UFW activo con denegación por defecto; desde fuera de la subred no se alcanza ningún servicio interno |
+| **Docker Compose** | el sitio web y la base de datos se versionan con `docker-compose.yml` para despliegue reproducible | `docker compose up -d` levanta sitio y base de datos desde cero sin pasos manuales adicionales |
+| **Respaldos automáticos** | tarea programada (cron) que respalda `/srv/compartido` y vuelca la base de datos | el respaldo semanal aparece en `/srv/backups` con datos actuales y una restauración de prueba es exitosa |
+| **Monitoreo básico** | verificación periódica de servicios activos con alertas | la verificación reporta el estado de todos los servicios y genera alerta al detenerse alguno |
 
 ## 4. Tabla de requisitos
 
@@ -221,6 +298,23 @@ Un único árbol servido por NFS (salas Linux) y Samba (administración y secret
 | IP pública dinámica del proveedor | Medio | DNS dinámico (DuckDNS) actualizado automáticamente |
 | Certificado autofirmado genera advertencias | Bajo | Transición a Let's Encrypt al quedar el dominio operativo |
 | Saturación de la VM (2 vCPU) | Medio | Carga moderada de la dependencia + monitoreo básico (extra) |
+
+## 10. Análisis de costo-beneficio
+
+Toda la pila propuesta se construye con software libre o de uso gratuito. La tabla contrasta cada componente con la alternativa comercial típica (precios de lista aproximados para una carga equivalente; interesa el orden de magnitud, no una cotización exacta):
+
+| Componente | Solución propuesta | Alternativa comercial típica | Beneficio |
+|---|---|---|---|
+| PaaS de despliegue | Dokploy autohospedado (USD 0) | Heroku (dyno básico ~25 USD/mes) o Vercel Pro (~20 USD/mes): 240–300 USD/año | Despliegue ágil sin costo recurrente y con los datos dentro de la institución |
+| Base de datos | PostgreSQL (USD 0) | BD administrada en la nube (~25–40 USD/mes) o licencia de SQL Server (varios miles de USD) | Motor robusto sin licencias, soportado nativamente por Dokploy |
+| Archivos y autenticación de las salas Linux | NFS + NIS incluidos en Ubuntu Server (USD 0) | Windows Server con File Server y AD DS más CALs por usuario/equipo (mil a varios miles de USD) | Funcionalidad requerida por las salas a costo cero |
+| Archivos para Windows | Samba incluido en Ubuntu Server (USD 0) | Windows Server con File Server más CALs | Un solo árbol de datos para Linux y Windows sin licencias |
+| Impresión | CUPS incluido en Ubuntu Server (USD 0) | Soluciones comerciales de gestión de impresión con cobro por dispositivo o usuario | Colas IPP estándar para Windows y Linux con registro de trabajos |
+| Firewall | UFW incluido en Ubuntu (USD 0) | Appliance de firewall (300–1.500 USD) o servicio gestionado | Filtrado por subred suficiente para el alcance del proyecto |
+| Dominio y TLS | DuckDNS + Let's Encrypt (USD 0) | Dominio propio (~15 USD/año) más certificado comercial (~150–300 USD/año) | DNS dinámico y certificados automáticos sin costo |
+| Sistema operativo del servidor | Ubuntu Server 24.04 LTS (USD 0) | Windows Server 2022 Standard (~1.000 USD por licencia) | Sin costo de licencia y con actualizaciones de seguridad gratuitas |
+
+El costo de licencias de la pila completa es cero, frente a alternativas que suman desde unos cientos hasta varios miles de dólares. Los costos que la propuesta sí asume son de otra naturaleza: horas de instalación y administración (a cargo del equipo del proyecto), el hardware o la VM (existente en el laboratorio) y el consumo energético. Como beneficios no monetarios adicionales, la institución conserva los datos de aspirantes y estudiantes en sus propios sistemas (relevante para la Ley 1581 de 2012) y evita la dependencia de proveedores externos para el funcionamiento del sitio y de los servicios.
 
 ---
 

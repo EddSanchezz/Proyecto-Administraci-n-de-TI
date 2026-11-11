@@ -1,0 +1,356 @@
+/* ============================================================================
+   estilos.css - Presentacion del sitio institucional ITEC
+   ----------------------------------------------------------------------------
+   Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
+   Instituto Tecnico de Educacion Comfenalco Quindio
+
+   Paleta sobria institucional (azul Comfenalco sobre blanco), tipografia
+   del sistema y disenio adaptable a telefonos y tablets.
+   ============================================================================ */
+
+:root {
+    --azul-oscuro: #1a3a6b;
+    --azul-medio: #2e5aa8;
+    --azul-claro: #eef3fb;
+    --gris-texto: #333;
+    --gris-suave: #667;
+    --borde: #d7dce5;
+    --fondo: #ffffff;
+    --exito: #1e6b3a;
+    --fondo-exito: #e9f7ee;
+    --error: #a02020;
+    --fondo-error: #fbecec;
+    --aviso: #8a6d1a;
+    --fondo-aviso: #fdf6e0;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    color: var(--gris-texto);
+    background: var(--fondo);
+    line-height: 1.6;
+}
+
+.contenedor {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+}
+
+/* ------------------------------ Cabecera -------------------------------- */
+
+.cabecera-sitio {
+    background: var(--azul-oscuro);
+    color: #fff;
+}
+
+.barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.9rem;
+    padding-bottom: 0.9rem;
+}
+
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: #fff;
+}
+
+.marca-sigla {
+    background: #fff;
+    color: var(--azul-oscuro);
+    font-weight: 700;
+    font-size: 1.15rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    letter-spacing: 0.05em;
+}
+
+.marca-texto {
+    font-size: 0.9rem;
+    line-height: 1.25;
+}
+
+.navegacion a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1.25rem;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.navegacion a:hover,
+.navegacion a.activo {
+    opacity: 1;
+    border-bottom: 2px solid #fff;
+}
+
+/* -------------------------------- Portada ------------------------------- */
+
+.portada {
+    background: linear-gradient(160deg, var(--azul-medio), var(--azul-oscuro));
+    color: #fff;
+    text-align: center;
+    padding: 3.5rem 1.25rem;
+    margin: 0 -0rem;
+}
+
+.portada h1 {
+    margin: 0 0 0.75rem;
+    font-size: 2rem;
+}
+
+.lema {
+    max-width: 46rem;
+    margin: 0 auto 1.5rem;
+}
+
+/* ------------------------------- Secciones ------------------------------- */
+
+main section {
+    padding: 2.25rem 0;
+    border-bottom: 1px solid var(--borde);
+}
+
+main section:last-of-type {
+    border-bottom: none;
+}
+
+h2 {
+    color: var(--azul-oscuro);
+    margin-top: 0;
+}
+
+h3 {
+    color: var(--azul-medio);
+    margin-bottom: 0.4rem;
+}
+
+.dos-columnas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.nota {
+    color: var(--gris-suave);
+    font-size: 0.92rem;
+    background: var(--azul-claro);
+    border-left: 4px solid var(--azul-medio);
+    padding: 0.75rem 1rem;
+    border-radius: 0 6px 6px 0;
+}
+
+/* -------------------------------- Tablas --------------------------------- */
+
+.tabla-desplazable {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.95rem;
+}
+
+th, td {
+    border: 1px solid var(--borde);
+    padding: 0.55rem 0.7rem;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: var(--azul-oscuro);
+    color: #fff;
+}
+
+tbody tr:nth-child(even) {
+    background: var(--azul-claro);
+}
+
+/* --------------------------- Pasos de admision -------------------------- */
+
+.pasos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    list-style: none;
+    padding: 0;
+    counter-reset: paso;
+}
+
+.pasos li {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    padding: 1rem;
+    background: #fbfcfe;
+}
+
+/* -------------------------------- Botones -------------------------------- */
+
+.boton {
+    display: inline-block;
+    background: var(--azul-medio);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    padding: 0.65rem 1.3rem;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.boton:hover { background: var(--azul-oscuro); }
+
+.boton.grande { font-size: 1.1rem; padding: 0.85rem 1.8rem; }
+
+.boton.secundario {
+    background: transparent;
+    border: 2px solid #fff;
+    margin-left: 0.75rem;
+}
+
+.portada .boton.secundario:hover { background: rgba(255, 255, 255, 0.15); }
+
+/* ------------------------------ Formulario ------------------------------- */
+
+.pagina-formulario {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.introduccion { color: var(--gris-suave); }
+
+fieldset {
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    margin: 0 0 1.25rem;
+    padding: 1rem 1.25rem 1.25rem;
+}
+
+legend {
+    font-weight: 700;
+    color: var(--azul-oscuro);
+    padding: 0 0.4rem;
+}
+
+.campo { margin-bottom: 1rem; }
+
+.campo.media {
+    display: inline-block;
+    width: calc(50% - 0.5rem);
+    margin-right: 0.5rem;
+}
+
+@media (max-width: 600px) {
+    .campo.media { width: 100%; margin-right: 0; }
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--borde);
+    border-radius: 6px;
+    font: inherit;
+    background: #fff;
+}
+
+input:focus, select:focus {
+    outline: 2px solid var(--azul-medio);
+    border-color: var(--azul-medio);
+}
+
+.etiqueta-chequeo {
+    display: flex;
+    gap: 0.6rem;
+    font-weight: 400;
+    align-items: flex-start;
+}
+
+.etiqueta-chequeo input[type="checkbox"] {
+    margin-top: 0.35rem;
+    width: 1rem;
+    height: 1rem;
+}
+
+.error-campo {
+    color: var(--error);
+    margin: 0.25rem 0 0;
+    font-size: 0.88rem;
+}
+
+/* ------------------------------- Mensajes -------------------------------- */
+
+.mensaje {
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem auto;
+}
+
+.mensaje h1, .mensaje h2 { color: inherit; }
+
+.mensaje.exito {
+    background: var(--fondo-exito);
+    border: 1px solid var(--exito);
+    color: var(--exito);
+}
+
+.mensaje.error {
+    background: var(--fondo-error);
+    border: 1px solid var(--error);
+    color: var(--error);
+}
+
+.mensaje.aviso {
+    background: var(--fondo-aviso);
+    border: 1px solid var(--aviso);
+    color: var(--aviso);
+}
+
+.mensaje ol { color: inherit; }
+
+/* -------------------------------- Contacto ------------------------------- */
+
+.contacto address {
+    font-style: normal;
+    background: var(--azul-claro);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    display: inline-block;
+}
+
+.contacto p { margin: 0.2rem 0; }
+
+/* --------------------------------- Pie ----------------------------------- */
+
+.pie-sitio {
+    background: var(--azul-oscuro);
+    color: #dfe6f2;
+    padding: 1.5rem 0;
+    font-size: 0.88rem;
+}
+
+.pie-sitio p { margin: 0.3rem 0; }

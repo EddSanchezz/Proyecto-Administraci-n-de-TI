@@ -10,8 +10,8 @@
 | Semana | Entregable | Archivos | Estado |
 |--------|------------|----------|--------|
 | 1 | Análisis y diseño | `analisis.md` · `diagrama.mmd` | Listo para revisión |
-| 2 | Infraestructura base | `codigo/instalacion/` · `codigo/ssl/` · `codigo/configuraciones/` | En preparación |
-| 3 | Servicios de infraestructura | `codigo/web/` · scripts de servicios | Por desarrollar |
+| 2 | Infraestructura base | `codigo/instalacion/01-03` · `codigo/ssl/` · `codigo/configuraciones/` · `codigo/seguridad/` | Código listo; pendiente ejecutar en la VM |
+| 3 | Servicios de infraestructura | `codigo/instalacion/04-07` · `codigo/web/` · `codigo/configuraciones/` | Código listo; pendiente ejecutar en la VM |
 | 4 | Documentación y presentación | `documentacion.md` · `capturas/` | Plantilla lista |
 
 ## Estructura del repositorio
@@ -45,7 +45,7 @@
 
 ## Cómo revisar la Semana 1
 
-1. **`analisis.md`** — contexto real del instituto (perfil, programas técnicos, admisión y matrícula según el PEI), necesidades (N1–N8), justificación de cada servicio, tabla de requisitos (IP/puerto/protocolo/tipo), recursos de la VM, plan por semanas y riesgos.
+1. **`analisis.md`** — contexto real del instituto (perfil y datos verificados en el PEI y el Reglamento Estudiantil: identificación, once programas técnicos con registro y duración, jornadas, procesos de admisión, matrícula, evaluación y certificación), necesidades (N1–N8), justificación de cada servicio con su criterio de éxito, tabla de requisitos (IP/puerto/protocolo/tipo), recursos de la VM, árbol de datos compartido, plan por semanas, riesgos y análisis de costo-beneficio (licencias cero frente a alternativas comerciales).
 2. **`diagrama.mmd`** — copiar su contenido en <https://mermaid.live> (o abrir en VS Code con la extensión *Markdown Preview Mermaid Support*) para ver el diagrama de arquitectura.
 
 ### Pendientes por completar (antes de la entrega)
@@ -57,8 +57,14 @@
 
 1. Crear la VM: VirtualBox/VMware · Ubuntu Server 24.04 LTS · 2 vCPU · 4 GB RAM · 40 GB · red **bridged**.
 2. Configurar IP estática `192.168.1.10` (o reserva DHCP).
-3. Ejecutar los scripts de `codigo/instalacion/` (en preparación): preparación del servidor, Dokploy y NTP.
+3. Ejecutar los scripts de `codigo/` siguiendo el orden de `codigo/README.md`:
+   preparación del servidor, Dokploy, NTP, DuckDNS, certificado y firewall.
 4. Registrar el dominio DuckDNS y configurar SSL/TLS.
+5. Tomar las evidencias en `capturas/` y completar `documentacion.md`.
+
+El código de las semanas 2 y 3 está escrito y documentado (ver `codigo/README.md`
+para el orden de ejecución y las notas de seguridad sobre secretos); falta
+ejecutarlo en la VM, verificar cada servicio y evidenciar.
 
 ## Recursos
 
