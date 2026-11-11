@@ -1,0 +1,66 @@
+%%{init: { "theme": "default", "themeVariables": { "fontFamily": "Segoe UI, sans-serif" } } }%%
+graph TB
+
+    INTERNET(("Internet"))
+    DNS["DNS dinámico gratuito<br/>itec-quindio.duckdns.org"]
+
+    subgraph RED["red local · 192.168.1.0/24 · modo bridged"]
+
+        subgraph CLIENTES["clientes de la red"]
+            SALAS["Salas de informática Linux<br/>estudiantes en formación técnica"]
+            ADMON["Administración y secretaría<br/>PCs Windows"]
+        end
+
+        subgraph IMPRESORAS["impresoras"]
+            P1["Impresora 1"]
+            P2["Impresora 2"]
+        end
+
+        subgraph SRV["servidor · Ubuntu Server 24.04 LTS · IP fija 192.168.1.10<br/>VM: 2 vCPU · 4 GB RAM · 40 GB disco"]
+
+            subgraph DOKPLOY["Dokploy · PaaS sobre contenedores Docker"]
+                PANEL["Panel de administración<br/>puerto 3000 · solo LAN"]
+                TRAEFIK["Traefik · proxy inverso<br/>puertos 80/443 · HTTPS + TLS"]
+                WEB["Sitio web institucional<br/>programas, admisión y matrícula<br/>formulario de preinscripción"]
+                DB[("PostgreSQL<br/>puerto 5432 · solo interno")]
+            end
+
+            subgraph SERVICIOS["servicios Linux tradicionales"]
+                NTP["NTP · servidor de tiempo<br/>puerto 123/UDP"]
+                NFS["NFS · archivos para salas Linux<br/>puerto 2049"]
+                NIS["NIS · cuentas de estudiantes<br/>puerto 834"]
+                CUPS["CUPS · impresión de certificados<br/>y material didáctico · puerto 631"]
+                SMB["Samba · archivos para Windows<br/>puerto 445"]
+            end
+
+            DATOS[("/srv/compartido<br/>academicos · secretaria · contabilidad")]
+        end
+    end
+
+    DNS -.->|"resuelve a la IP pública"| INTERNET
+    INTERNET -->|"HTTPS · 443"| TRAEFIK
+    TRAEFIK --> WEB
+    TRAEFIK --> PANEL
+    WEB --> DB
+
+    SALAS -->|"NFSv4 · 2049"| NFS
+    SALAS -->|"YP · 834"| NIS
+    SALAS -->|"IPP · 631"| CUPS
+    SALAS -->|"NTP · 123/UDP"| NTP
+    ADMON -->|"SMB/CIFS · 445"| SMB
+    ADMON -->|"IPP · 631"| CUPS
+    ADMON -->|"NTP · 123/UDP"| NTP
+
+    NFS --> DATOS
+    SMB --> DATOS
+    CUPS --> P1
+    CUPS --> P2
+
+    classDef paas fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+    classDef linux fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
+    classDef cliente fill:#FFF3E0,stroke:#EF6C00,color:#E65100
+    classDef fisico fill:#F3E5F5,stroke:#6A1B9A,color:#4A148C
+    class PANEL,TRAEFIK,WEB,DB paas
+    class NTP,NFS,NIS,CUPS,SMB linux
+    class SALAS,ADMON cliente
+    class P1,P2,DATOS,INTERNET,DNS fisico
