@@ -9,10 +9,10 @@
 
 | Semana | Entregable | Archivos | Estado |
 |--------|------------|----------|--------|
-| 1 | Análisis y diseño | `analisis.md` · `diagrama.mmd` | Listo para revisión |
-| 2 | Infraestructura base | `codigo/instalacion/01-03` · `codigo/ssl/` · `codigo/configuraciones/` · `codigo/seguridad/` | Código listo; pendiente ejecutar en la VM |
-| 3 | Servicios de infraestructura | `codigo/instalacion/04-07` · `codigo/web/` · `codigo/configuraciones/` | Código listo; pendiente ejecutar en la VM |
-| 4 | Documentación y presentación | `documentacion.md` · `capturas/` | Plantilla lista |
+| 1 | Análisis y diseño | `analisis.md` · `diagrama.mmd` | Listo |
+| 2 | Infraestructura base (P1) | `codigo/instalacion/01-03` · `codigo/ssl/` · `codigo/configuraciones/` · `codigo/seguridad/` | Ejecutado en VM `itec-server` (192.168.80.10) |
+| 3 | Servicios (P1+P2) | `codigo/instalacion/02` · `codigo/web/` | Web + PostgreSQL (Dokploy) desplegados y verificados |
+| 4 | Documentación y presentación (P1+P2) | `documentacion.md` · `capturas/` | Evidencias reales de P1+P2 en `capturas/` |
 
 ## Estructura del repositorio
 
@@ -29,7 +29,7 @@
 │   ├── ssl/                # generación de certificados
 │   ├── seguridad/          # reglas de firewall (UFW)
 │   └── web/                # sitio web institucional + base de datos
-└── Documentos/              # guía oficial del proyecto (PDF)
+└── docs/              # guía oficial del proyecto (PDF)
 ```
 
 ## Mapeo de servicios con la operación del instituto
@@ -56,7 +56,7 @@
 ## Próximos pasos (Semana 2)
 
 1. Crear la VM: VirtualBox/VMware · Ubuntu Server 24.04 LTS · 2 vCPU · 4 GB RAM · 40 GB · red **bridged**.
-2. Configurar IP estática `192.168.1.10` (o reserva DHCP).
+2. Configurar IP estática `192.168.80.10` (o reserva DHCP).
 3. Ejecutar los scripts de `codigo/` siguiendo el orden de `codigo/README.md`:
    preparación del servidor, Dokploy, NTP, DuckDNS, certificado y firewall.
 4. Registrar el dominio DuckDNS y configurar SSL/TLS.
@@ -68,7 +68,7 @@ ejecutarlo en la VM, verificar cada servicio y evidenciar.
 
 ## Recursos
 
-- Guía oficial del curso: `Documentos/11_proyecto_final_admin_infraestructura.pdf`
+- Guía oficial del curso: `docs/11_proyecto_final_admin_infraestructura.pdf`
 - PEI y Reglamento Estudiantil del instituto: <https://comfenalcoquindio.com/instituto-tecnico> (sección Reglamentación)
 - [Documentación de Dokploy](https://dokploy.com/docs)
 - Manuales: NFS · Samba · CUPS · [NTP Project](https://www.ntppool.org/es/) · NIS

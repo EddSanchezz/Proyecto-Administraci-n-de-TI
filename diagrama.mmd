@@ -4,7 +4,7 @@ graph TB
     INTERNET(("Internet"))
     DNS["DNS dinámico gratuito<br/>itec-quindio.duckdns.org"]
 
-    subgraph RED["red local · 192.168.1.0/24 · modo bridged"]
+    subgraph RED["red local · 192.168.80.0/24 · modo bridged"]
 
         subgraph CLIENTES["clientes de la red"]
             SALAS["Salas de informática Linux<br/>estudiantes en formación técnica"]
@@ -16,7 +16,7 @@ graph TB
             P2["Impresora 2"]
         end
 
-        subgraph SRV["servidor · Ubuntu Server 24.04 LTS · IP fija 192.168.1.10<br/>VM: 2 vCPU · 4 GB RAM · 40 GB disco"]
+        subgraph SRV["servidor · Ubuntu Server 24.04 LTS · IP fija 192.168.80.10<br/>VM: 2 vCPU · 4 GB RAM · 40 GB disco"]
 
             subgraph DOKPLOY["Dokploy · PaaS sobre contenedores Docker"]
                 PANEL["Panel de administración<br/>puerto 3000 · solo LAN"]

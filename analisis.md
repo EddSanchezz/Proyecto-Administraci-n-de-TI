@@ -127,7 +127,7 @@ Como equipo consultor, proponemos e implementamos la infraestructura sobre el es
 
 ## 2. Solución propuesta — visión general
 
-Se propone **un único servidor** (máquina virtual Ubuntu Server 24.04 LTS, IP fija `192.168.1.10`) que centraliza dos frentes complementarios:
+Se propone **un único servidor** (máquina virtual Ubuntu Server 24.04 LTS, IP fija `192.168.80.10`) que centraliza dos frentes complementarios:
 
 1. **Frente moderno (PaaS):** **Dokploy** con Traefik como proxy inverso, sobre el cual se despliega el sitio web institucional con su base de datos PostgreSQL y el formulario de preinscripción; allí podrán alojarse futuras aplicaciones académicas (N7).
 2. **Frente de servicios de red tradicionales:** NTP, NFS, NIS, CUPS y Samba para resolver las necesidades operativas de salas, secretaría y administración (N2–N6).
@@ -159,13 +159,13 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 - **Qué aporta:** el servidor se sincroniza contra `pool.ntp.org` y se convierte en la fuente de hora única de la red local (puerto 123/UDP); las estaciones Windows y Linux apuntan a él.
 - **Por qué importa en el instituto:** los registros de matrícula, la expedición de certificados y constancias, y los respaldos requieren marcas de tiempo consistentes y verificables.
 - **Alternativas descartadas:** que cada equipo sincronice por su cuenta contra internet (deriva entre equipos, tráfico innecesario y dependencia del proveedor).
-- **Criterio de éxito:** servidor sincronizado con `pool.ntp.org` (estado y estrato visibles con `ntpq -p`) y al menos un cliente Windows y un cliente Linux obteniendo la hora desde 192.168.1.10 con desviación menor a un segundo.
+- **Criterio de éxito:** servidor sincronizado con `pool.ntp.org` (estado y estrato visibles con `ntpq -p`) y al menos un cliente Windows y un cliente Linux obteniendo la hora desde 192.168.80.10 con desviación menor a un segundo.
 
 ### 3.4 NFS — compartición de archivos para las salas Linux
 
 - **Necesidad:** N2 y N3 (estaciones Linux de las salas de informática).
 - **Qué aporta:** exporta el árbol `/srv/compartido/academicos` por NFSv4 (puerto 2049) para que las salas Linux monten los directorios de trabajo como una unidad local: los estudiantes acceden a sus trabajos desde cualquier sala, con permisos por grupo (estudiantes, docentes).
-- **Alcance:** exportación restringida a la subred 192.168.1.0/24.
+- **Alcance:** exportación restringida a la subred 192.168.80.0/24.
 - **Criterio de éxito:** una estación Linux monta `/srv/compartido/academicos` por NFSv4 y un archivo creado en una sala queda disponible al iniciar sesión desde otra sala (persistencia verificada en el servidor).
 
 ### 3.5 NIS — autenticación centralizada para las salas Linux
@@ -179,9 +179,9 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 ### 3.6 CUPS — servidor de impresión
 
 - **Necesidad:** N4.
-- **Qué aporta:** las impresoras se conectan al servidor; CUPS publica colas IPP (puerto 631) utilizables desde Windows y Linux, con administración web (`https://192.168.1.10:631`) y registro de trabajos.
+- **Qué aporta:** las impresoras se conectan al servidor; CUPS publica colas IPP (puerto 631) utilizables desde Windows y Linux, con administración web (`https://192.168.80.10:631`) y registro de trabajos.
 - **Beneficio:** la secretaría imprime certificados y constancias desde su cola, los docentes imprimen material didáctico desde las salas, y queda trazabilidad del gasto de impresión.
-- **Criterio de éxito:** la cola se publica en `ipp://192.168.1.10:631`, es utilizable desde un cliente Windows y uno Linux, y los trabajos enviados quedan registrados en la interfaz de administración.
+- **Criterio de éxito:** la cola se publica en `ipp://192.168.80.10:631`, es utilizable desde un cliente Windows y uno Linux, y los trabajos enviados quedan registrados en la interfaz de administración.
 
 ### 3.7 Samba — compartición de archivos para Windows
 
@@ -200,9 +200,9 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 ### 3.9 Dominio/DNS y SSL/TLS
 
 - **Necesidad:** N8.
-- **Qué aporta:** nombre público con **DNS dinámico gratuito** (DuckDNS, propuesto: `itec-quindio.duckdns.org`) que apunta al servidor; certificado **Let's Encrypt** emitido y renovado automáticamente por Dokploy/Traefik para HTTPS. Como alternativa inmediata para pruebas internas, certificado autofirmado generado por script (`codigo/ssl/`).
-- **Por qué esta combinación:** costo cero, renovación automática y sin advertencias de navegador una vez el dominio resuelva.
-- **Criterio de éxito:** `itec-quindio.duckdns.org` resuelve hacia la IP pública del servidor, el sitio responde por HTTPS con certificado válido (o autofirmado en pruebas internas) y el puerto 80 únicamente redirige a 443.
+- **Qué aporta:** nombre de dominio gratuito que apunta al servidor y certificado TLS para HTTPS. En el diseño se propuso **DuckDNS** (`itec-quindio.duckdns.org`) con **Let's Encrypt**; en el laboratorio, al no disponer de IP pública ni de reenvío de los puertos 80/443 en el router, se usa **sslip.io** (`itec.192-168-80-10.sslip.io`, DNS gratuito sin registro que resuelve a la IP del servidor) y un certificado **autofirmado con CA propia** generado por `codigo/ssl/certificado_autofirmado.sh`. La CA se importa en los clientes de la LAN para que el candado sea confiable.
+- **Por qué esta combinación:** costo cero y funcionamiento aun detrás de NAT/CGNAT. DuckDNS + Let's Encrypt queda documentado como la variante de producción cuando exista IP pública y los puertos 80/443 estén reenviados.
+- **Criterio de éxito:** el dominio del laboratorio resuelve a `192.168.80.10`, el sitio responde por HTTPS con certificado válido/confiable y el puerto 80 únicamente redirige a 443.
 
 ### 3.10 Mejoras opcionales (puntos extra)
 
@@ -215,26 +215,27 @@ El diagrama completo de la arquitectura está en **`diagrama.mmd`** (renderizabl
 
 ## 4. Tabla de requisitos
 
-Servidor: **192.168.1.10** (hostname `itec-server`) · Red local: `192.168.1.0/24`
+Servidor: **192.168.80.10** (hostname `itec-server`) · Red local: `192.168.80.0/24`
 
 | # | Servicio | Software | IP | Puerto(s) | Protocolo | Tipo de servicio |
 |---|---|---|---|---|---|---|
-| 1 | Administración remota | OpenSSH | 192.168.1.10 | 22 | TCP | Gestión remota segura |
-| 2 | Panel PaaS | Dokploy | 192.168.1.10 | 3000 | TCP (HTTP, solo LAN) | Plataforma de despliegue |
-| 3 | Sitio web institucional | Traefik + Nginx (Dokploy) | 192.168.1.10 | 443 (80 → redirige a 443) | TCP (HTTPS/TLS) | Sitio web |
-| 4 | Sincronización de tiempo | ntpd | 192.168.1.10 | 123 | UDP | NTP |
-| 5 | Archivos salas Linux | nfs-kernel-server | 192.168.1.10 | 2049 | TCP (NFSv4) | Compartición de archivos |
-| 6 | Autenticación salas Linux | ypserv (NIS) | 192.168.1.10 | 834 (fijado) + 111 | TCP/UDP (RPC) | Servicio de credenciales |
-| 7 | Impresión | cupsd | 192.168.1.10 | 631 | TCP/UDP (IPP) | Servidor de impresión |
-| 8 | Archivos Windows | smbd (Samba) | 192.168.1.10 | 445 | TCP (SMB/CIFS) | Compartición de archivos |
-| 9 | Base de datos | PostgreSQL (Dokploy) | 192.168.1.10 | 5432 (solo interno) | TCP | Base de datos relacional |
+| 1 | Administración remota | OpenSSH | 192.168.80.10 | 22 | TCP | Gestión remota segura |
+| 2 | Panel PaaS | Dokploy | 192.168.80.10 | 3000 | TCP (HTTP, solo LAN) | Plataforma de despliegue |
+| 3 | Sitio web institucional | Traefik + Nginx (Dokploy) | 192.168.80.10 | 443 (80 → redirige a 443) | TCP (HTTPS/TLS) | Sitio web |
+| 4 | Sincronización de tiempo | ntpd | 192.168.80.10 | 123 | UDP | NTP |
+| 5 | Archivos salas Linux | nfs-kernel-server | 192.168.80.10 | 2049 | TCP (NFSv4) | Compartición de archivos |
+| 6 | Autenticación salas Linux | ypserv (NIS) | 192.168.80.10 | 834 (fijado) + 111 | TCP/UDP (RPC) | Servicio de credenciales |
+| 7 | Impresión | cupsd | 192.168.80.10 | 631 | TCP/UDP (IPP) | Servidor de impresión |
+| 8 | Archivos Windows | smbd (Samba) | 192.168.80.10 | 445 | TCP (SMB/CIFS) | Compartición de archivos |
+| 9 | Base de datos | PostgreSQL (Dokploy) | 192.168.80.10 | 5432 (solo LAN / red interna Docker) | TCP | Base de datos relacional |
 
 **Notas de la tabla:**
 
 - El puerto 834 de NIS se fija explícitamente en la configuración (`ypserv -p`) para poder filtrarlo con UFW; rpcbind (111) queda igualmente restringido a la LAN.
 - Samba funciona únicamente sobre 445; los puertos legado NetBIOS 137–139 permanecen deshabilitados.
 - El puerto 80 solo recibe tráfico para redirigirlo a HTTPS.
-- 3000 (panel Dokploy) y 5432 (PostgreSQL) no se exponen a internet: reglas UFW limitadas a la subred.
+- 3000 (panel Dokploy) y 5432 (PostgreSQL) no se exponen a internet: UFW y la cadena `DOCKER-USER` los limitan a `192.168.80.0/24`. El 5432 de la base de Dokploy no se publica fuera de la red interna de Docker; la regla UFW es defensa en profundidad.
+- El acceso HTTPS usa el dominio `itec.192-168-80-10.sslip.io` y un certificado de la CA local; ver §3.9.
 
 ## 5. Recursos y configuración de la máquina virtual
 
@@ -246,9 +247,9 @@ Servidor: **192.168.1.10** (hostname `itec-server`) · Red local: `192.168.1.0/2
 | RAM | 4 GB |
 | Disco | 40 GB |
 | Modo de red | Bridged (accesible desde toda la red local) |
-| IP | 192.168.1.10 estática (o reserva DHCP en el router) |
+| IP | 192.168.80.10 estática (o reserva DHCP en el router) |
 | Hostname | itec-server |
-| Puerta de enlace / DNS | 192.168.1.1 / DNS del proveedor o 8.8.8.8 |
+| Puerta de enlace / DNS | 192.168.80.1 / DNS del proveedor o 8.8.8.8 |
 
 ## 6. Diseño del árbol de datos compartidos
 
@@ -271,7 +272,7 @@ Un único árbol servido por NFS (salas Linux) y Samba (administración y secret
 
 ## 7. Seguridad
 
-- **Firewall (UFW):** política por defecto denegatoria; solo los puertos de la sección 4, y los servicios internos (123, 834, 2049, 445, 631, 3000, 5432) aceptan tráfico únicamente desde `192.168.1.0/24`.
+- **Firewall (UFW):** política por defecto denegatoria; solo los puertos de la sección 4, y los servicios internos (123, 834, 2049, 445, 631, 3000, 5432) aceptan tráfico únicamente desde `192.168.80.0/24`.
 - **TLS:** HTTPS obligatorio en el sitio web (Let's Encrypt o autofirmado en pruebas).
 - **Datos personales de aspirantes y estudiantes** (Ley 1581 de 2012): la base de datos no se expone a internet, se incluye en los respaldos cifrados y el acceso queda limitado a la red interna.
 - **NIS:** aceptado como solución legada solo dentro de la LAN y protegido por firewall.
@@ -311,10 +312,27 @@ Toda la pila propuesta se construye con software libre o de uso gratuito. La tab
 | Archivos para Windows | Samba incluido en Ubuntu Server (USD 0) | Windows Server con File Server más CALs | Un solo árbol de datos para Linux y Windows sin licencias |
 | Impresión | CUPS incluido en Ubuntu Server (USD 0) | Soluciones comerciales de gestión de impresión con cobro por dispositivo o usuario | Colas IPP estándar para Windows y Linux con registro de trabajos |
 | Firewall | UFW incluido en Ubuntu (USD 0) | Appliance de firewall (300–1.500 USD) o servicio gestionado | Filtrado por subred suficiente para el alcance del proyecto |
-| Dominio y TLS | DuckDNS + Let's Encrypt (USD 0) | Dominio propio (~15 USD/año) más certificado comercial (~150–300 USD/año) | DNS dinámico y certificados automáticos sin costo |
+| Dominio y TLS | DuckDNS + Let's Encrypt o sslip.io + CA local (USD 0) | Dominio propio (~15 USD/año) más certificado comercial (~150-300 USD/año) | DNS y certificados sin costo, también detrás de NAT |
 | Sistema operativo del servidor | Ubuntu Server 24.04 LTS (USD 0) | Windows Server 2022 Standard (~1.000 USD por licencia) | Sin costo de licencia y con actualizaciones de seguridad gratuitas |
 
 El costo de licencias de la pila completa es cero, frente a alternativas que suman desde unos cientos hasta varios miles de dólares. Los costos que la propuesta sí asume son de otra naturaleza: horas de instalación y administración (a cargo del equipo del proyecto), el hardware o la VM (existente en el laboratorio) y el consumo energético. Como beneficios no monetarios adicionales, la institución conserva los datos de aspirantes y estudiantes en sus propios sistemas (relevante para la Ley 1581 de 2012) y evita la dependencia de proveedores externos para el funcionamiento del sitio y de los servicios.
+
+## 11. Trazabilidad de requisitos y evidencias
+
+Esta tabla conecta cada requisito del proyecto con su verificación y con la captura real que lo demuestra (todas en `capturas/`). Se actualiza a medida que se ejecuta la implementación; una fila sin captura se considera pendiente.
+
+| Requisito | Verificación | Evidencia |
+|---|---|---|
+| VM con 2 vCPU, 4 GB RAM, 40 GB y red bridged | Configuración de VirtualBox + `hostnamectl` | `capturas/01_vm/01_virtualbox_config.png`, `03_ip_hostname.png` |
+| IP fija, hostname y SSH | `ip -br a`, `hostnamectl`, `ssh` desde el host | `capturas/01_vm/03_ip_hostname.png`, `04_ssh_desde_host.png` |
+| Dokploy instalado y panel operativo | `docker service ls`, panel en `:3000` | `capturas/02_dokploy/02_docker_service_ls.png`, `03_panel_login.png` |
+| Dominio/DNS configurado | `dig`/`nslookup` del dominio | `capturas/03_dns_ssl/02_dig.png` |
+| SSL/TLS activo | `openssl verify`, candado del navegador | `capturas/03_dns_ssl/03_certificado.png`, `04_https_candado.png` |
+| Firewall UFW (extra) | `ufw status verbose`, `iptables -L DOCKER-USER` | `capturas/11_seguridad/01_ufw_status.png`, `02_docker_user.png` |
+| Sitio web HTTPS con contenido real | Navegador: home, oferta y formulario | `capturas/05_web/01_home_https.png`, `02_oferta_programas.png` |
+| Formulario conectado a PostgreSQL | Envío real + `SELECT` de la fila | `capturas/05_web/04_registro_exitoso.png`, `capturas/06_bd/04_preinscripcion_insertada.png` |
+| Base de datos creada en Dokploy | Panel de Dokploy + `\dt` | `capturas/06_bd/01_dokploy_db_running.png`, `02_tablas.png` |
+| Backup automático (extra) | Archivos `.enc`, cron, log y restauración | `capturas/11_seguridad/04_backup_archivos.png` a `07_restauracion_select.png` |
 
 ---
 

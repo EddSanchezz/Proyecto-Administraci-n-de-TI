@@ -24,8 +24,8 @@
 set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
-IP_SERVIDOR="192.168.1.10"
-PUERTO_PANEL="3000"
+IP_SERVIDOR="${IP_SERVIDOR:-192.168.80.10}"
+PUERTO_PANEL="${PUERTO_PANEL:-3000}"
 FECHA="$(date +%Y%m%d-%H%M%S)"
 
 # ----------------------------- Utilidades -----------------------------------

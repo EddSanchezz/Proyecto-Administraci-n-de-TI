@@ -119,13 +119,13 @@ ss -tln | grep ':445 ' || err "El puerto 445 no esta en escucha."
 
 log "Recursos compartidos publicados:"
 smbclient -L localhost -N 2>/dev/null | grep -E 'Disk|IPC|Printer' | sed 's/^/  /' \
-    || info "Liste recursos con: smbclient -L //192.168.1.10 -N"
+    || info "Liste recursos con: smbclient -L //192.168.80.10 -N"
 
 # ========================= Resumen ============================================
 log "Servidor Samba configurado."
 echo "------------------------------------------------------------"
 echo " Recursos       : academicos secretaria contabilidad publico"
-echo " Acceso Windows : \\\\itec-server\\secretaria  (o \\\\192.168.1.10\\publico)"
+echo " Acceso Windows : \\\\itec-server\\secretaria  (o \\\\192.168.80.10\\publico)"
 echo " Protocolo      : SMB directo 445/tcp (NetBIOS deshabilitado)"
 echo "------------------------------------------------------------"
 echo " Prueba local:"

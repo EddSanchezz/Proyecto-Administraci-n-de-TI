@@ -11,7 +11,7 @@
 #   3. Define zona horaria America/Bogota.
 #   4. Activa actualizaciones automaticas de seguridad.
 #   5. Endurece SSH (sin root directo) y valida antes de recargar.
-#   6. Configura IP estatica 192.168.1.10/24 con netplan (paso final).
+#   6. Configura IP estatica 192.168.80.10/24 con netplan (paso final).
 #
 # Uso (como root o con sudo, desde la carpeta que contenga este script):
 #   sudo bash 01_preparar_servidor.sh
@@ -20,7 +20,7 @@
 #   - Es idempotente: puede ejecutarse de nuevo sin romper nada.
 #   - El cambio de IP se hace AL FINAL para que, si se pierde la conexion SSH,
 #     todo lo demas ya quede aplicado.
-#   - Alternativa valida: dejar DHCP y crear una reserva 192.168.1.10 en el
+#   - Alternativa valida: dejar DHCP y crear una reserva 192.168.80.10 en el
 #     router del laboratorio (seccion 5 de analisis.md); en ese caso el script
 #     detecta la IP y no escribe el netplan.
 # ============================================================================
@@ -28,12 +28,12 @@
 set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
-NUEVO_HOSTNAME="itec-server"
-IP_ESTATICA="192.168.1.10"
-PREFIJO="24"
-GATEWAY="192.168.1.1"
-DNS1="192.168.1.1"
-DNS2="8.8.8.8"
+NUEVO_HOSTNAME="${NUEVO_HOSTNAME:-itec-server}"
+IP_ESTATICA="${IP_ESTATICA:-192.168.80.10}"
+PREFIJO="${PREFIJO:-24}"
+GATEWAY="${GATEWAY:-192.168.80.1}"
+DNS1="${DNS1:-1.1.1.1}"
+DNS2="${DNS2:-8.8.8.8}"
 ZONA_HORARIA="America/Bogota"
 NETPLAN_ARCHIVO="/etc/netplan/99-itec-estatica.yaml"
 FECHA="$(date +%Y%m%d-%H%M%S)"
@@ -64,18 +64,22 @@ if [[ "${VERSION_ID:-}" != "24.04" ]]; then
     info "Version de Ubuntu: ${VERSION_ID:-desconocida} (el proyecto se probo para 24.04 LTS; se continua)."
 fi
 
-# Interfaz de red por defecto (la que tiene la ruta por defecto)
-if command -v ip >/dev/null 2>&1; then
+# Interfaz de red:
+#   - Si se define INTERFAZ=... en el entorno, se usa esa (util cuando la VM
+#     tiene dos adaptadores, p. ej. bridged + host-only, y la IP del proyecto
+#     debe quedar en el segundo).
+#   - Si no, se detecta la interfaz con la ruta por defecto.
+if [[ -z "${INTERFAZ:-}" ]] && command -v ip >/dev/null 2>&1; then
     INTERFAZ="$(ip route show default 2>/dev/null | awk '{print $5; exit}')"
 fi
 if [[ -z "${INTERFAZ:-}" || "${INTERFAZ}" == "lo" ]]; then
     INTERFAZ="$(ls /sys/class/net | grep -v '^lo$' | head -n 1)"
 fi
-if [[ -z "${INTERFAZ:-}" ]]; then
-    err "No se pudo detectar una interfaz de red. Configure la red manualmente y vuelva a ejecutar."
+if [[ -z "${INTERFAZ:-}" || ! -d "/sys/class/net/${INTERFAZ}" ]]; then
+    err "No se pudo detectar una interfaz de red valida. Indique INTERFAZ=... y vuelva a ejecutar."
     exit 1
 fi
-info "Interfaz de red principal detectada: ${INTERFAZ}"
+info "Interfaz de red a configurar: ${INTERFAZ}"
 
 IP_ACTUAL="$(ip -4 addr show "${INTERFAZ}" | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1 || true)"
 info "IP actual en ${INTERFAZ}: ${IP_ACTUAL:-sin asignar}"

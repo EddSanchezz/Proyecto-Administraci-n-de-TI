@@ -6,7 +6,7 @@
 Todo el código de la infraestructura del proyecto. Los scripts se escribieron y
 revisaron **sin VM**, siguiendo la documentación oficial de cada componente
 (los hechos verificados se citan en cada encabezado), y están preparados para
-ejecutarse en la VM Ubuntu Server 24.04 LTS (`itec-server`, `192.168.1.10`).
+ejecutarse en la VM Ubuntu Server 24.04 LTS (`itec-server`, `192.168.80.10`).
 
 ## Contenido
 
@@ -26,11 +26,11 @@ Ejecutar como root (`sudo bash ...`) desde una copia local del repositorio
 ### Semana 2 — Infraestructura base
 
 1. `instalacion/01_preparar_servidor.sh` — actualiza el SO, hostname
-   `itec-server`, zona horaria, IP estática `192.168.1.10` (netplan), SSH
+   `itec-server`, zona horaria, IP estática `192.168.80.10` (netplan), SSH
    sin root directo y actualizaciones automáticas.
 2. `instalacion/02_instalar_dokploy.sh` — instala Docker + Dokploy con el
-   instalador oficial (`ADVERTISE_ADDR` fijo a `192.168.1.10`). Panel en
-   `http://192.168.1.10:3000`.
+   instalador oficial (`ADVERTISE_ADDR` fijo a `192.168.80.10`). Panel en
+   `http://192.168.80.10:3000`.
 3. `instalacion/03_configurar_ntp.sh` — instala `ntpsec` y despliega
    `configuraciones/ntp.conf` (servidor de tiempo de la LAN en 123/udp).
 4. `configuraciones/duckdns.sh` — actualiza `itec-quindio.duckdns.org`.
@@ -38,10 +38,10 @@ Ejecutar como root (`sudo bash ...`) desde una copia local del repositorio
    `sudo ./duckdns.sh --instalar <TOKEN>` lo guarda en `/etc/duckdns/token`
    y programa el cron cada 5 minutos.
 5. `ssl/certificado_autofirmado.sh` — CA local + certificado con SAN
-   (`itec-quindio.duckdns.org`, `itec-server`, `192.168.1.10`) para Traefik
+   (`itec-quindio.duckdns.org`, `itec-server`, `192.168.80.10`) para Traefik
    y CUPS. Importar `ca.crt` en los clientes de confianza.
 6. `seguridad/ufw_reglas.sh` — política denegatoria por defecto; puertos
-   internos solo desde `192.168.1.0/24`; incluye filtrado `DOCKER-USER`
+   internos solo desde `192.168.80.0/24`; incluye filtrado `DOCKER-USER`
    para los puertos que Docker publica (3000, 5432).
 
 ### Semana 3 — Servicios
@@ -69,7 +69,7 @@ Dos formas de desplegar la misma aplicación:
 - **Directa en la VM (docker compose):**
   1. `cp .env.example .env` y cambiar `POSTGRES_PASSWORD`.
   2. `docker compose up -d --build`.
-  3. Sitio en `http://192.168.1.10:8080`, PostgreSQL en 5432 (solo LAN).
+  3. Sitio en `http://192.168.80.10:8080`, PostgreSQL en 5432 (solo LAN).
 - **Con Dokploy (flujo del proyecto):** crear la aplicación desde el
   repositorio Git (detecta el `Dockerfile`), crear el PostgreSQL con usuario
   `itec_app`, base `itec`, y aplicar `db/init.sql`; registrar las variables

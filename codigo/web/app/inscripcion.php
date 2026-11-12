@@ -1,10 +1,10 @@
 <?php
 /**
  * ============================================================================
- * inscripcion.php - Formulario de preinscripcion en linea
+ * inscripcion.php - Formulario de preinscripción en línea
  * ----------------------------------------------------------------------------
  * Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
- * Instituto Tecnico de Educacion Comfenalco Quindio
+ * Instituto Técnico de Educación Comfenalco Quindío
  *
  * Replica el proceso de inscripcion del PEI (seccion 3.1.2.1): el aspirante
  * envia sus datos, la recepcionista programa la entrevista con el Coordinador
@@ -12,13 +12,13 @@
  * seguimiento desde secretaria.
  *
  * Seguridad aplicada:
- *   - Token CSRF por sesion en el formulario (bloqueo de envios falsificados).
+ *   - Token CSRF por sesión en el formulario (bloqueo de envíos falsificados).
  *   - Validacion server-side de TODOS los campos (la de HTML es solo apoyo).
  *   - Consultas siempre preparadas (PDO, sin concatenar SQL).
  *   - Salida escapada con htmlspecialchars (prevencion XSS).
  *   - Duplicados bloqueados por restriccion unica en la base de datos
  *     (documento + programa) con mensaje amable.
- *   - Autorizacion de tratamiento de datos obligatoria (Ley 1581 de 2012,
+ *   - Autorización de tratamiento de datos obligatoria (Ley 1581 de 2012,
  *     PEI 3.1.1): se guarda el hecho y la fecha, no el detalle del consentimiento.
  * ============================================================================
  */
@@ -62,41 +62,41 @@ function validar(array $post, array $programasValidos): array
     $errores = [];
 
     if ($datos['nombres'] === '' || mb_strlen($datos['nombres']) < 3) {
-        $errores['nombres'] = 'Escriba sus nombres (minimo 3 letras).';
+        $errores['nombres'] = 'Escriba sus nombres (mínimo 3 letras).';
     } elseif (mb_strlen($datos['nombres']) > 80) {
         $errores['nombres'] = 'El campo nombres no puede exceder 80 caracteres.';
     }
 
     if ($datos['apellidos'] === '' || mb_strlen($datos['apellidos']) < 3) {
-        $errores['apellidos'] = 'Escriba sus apellidos (minimo 3 letras).';
+        $errores['apellidos'] = 'Escriba sus apellidos (mínimo 3 letras).';
     } elseif (mb_strlen($datos['apellidos']) > 80) {
         $errores['apellidos'] = 'El campo apellidos no puede exceder 80 caracteres.';
     }
 
     if (!in_array($datos['tipo_documento'], TIPOS_DOCUMENTO, true)) {
-        $errores['tipo_documento'] = 'Seleccione un tipo de documento valido.';
+        $errores['tipo_documento'] = 'Seleccione un tipo de documento válido.';
     }
 
     if (!preg_match('/^[0-9]{5,12}$/', $datos['numero_documento'])) {
-        $errores['numero_documento'] = 'El numero de documento debe tener entre 5 y 12 digitos.';
+        $errores['numero_documento'] = 'El número de documento debe tener entre 5 y 12 dígitos.';
     }
 
     $fecha = DateTime::createFromFormat('Y-m-d', $datos['fecha_nacimiento']);
     if ($datos['fecha_nacimiento'] === '' || !$fecha || $fecha->format('Y-m-d') !== $datos['fecha_nacimiento']) {
-        $errores['fecha_nacimiento'] = 'Indique una fecha de nacimiento valida.';
+        $errores['fecha_nacimiento'] = 'Indique una fecha de nacimiento válida.';
     } else {
         $edad = (int)$fecha->diff(new DateTime('today'))->y;
         if ($edad < 10 || $edad > 100) {
-            $errores['fecha_nacimiento'] = 'La fecha de nacimiento no es coherente con una preinscripcion.';
+            $errores['fecha_nacimiento'] = 'La fecha de nacimiento no es coherente con una preinscripción.';
         }
     }
 
     if (!filter_var($datos['correo'], FILTER_VALIDATE_EMAIL) || mb_strlen($datos['correo']) > 120) {
-        $errores['correo'] = 'Escriba un correo electronico valido.';
+        $errores['correo'] = 'Escriba un correo electrónico válido.';
     }
 
     if (!preg_match('/^[0-9()+ \-]{7,20}$/', $datos['telefono'])) {
-        $errores['telefono'] = 'Escriba un telefono de contacto de 7 a 20 digitos.';
+        $errores['telefono'] = 'Escriba un teléfono de contacto de 7 a 20 dígitos.';
     }
 
     if (!in_array($datos['programa'], $programasValidos, true)) {
@@ -104,7 +104,7 @@ function validar(array $post, array $programasValidos): array
     }
 
     if (!isset(JORNADAS[$datos['jornada']])) {
-        $errores['jornada'] = 'Seleccione una jornada valida.';
+        $errores['jornada'] = 'Seleccione una jornada válida.';
     }
 
     if (!$datos['autorizacion']) {
@@ -116,7 +116,7 @@ function validar(array $post, array $programasValidos): array
 
 /* ----------------------------- Logica principal --------------------------- */
 
-/* Token CSRF: uno por sesion, rotado despues de un registro exitoso. */
+/* Token CSRF: uno por sesión, rotado despues de un registro exitoso. */
 if (empty($_SESSION['csrf'])) {
     $_SESSION['csrf'] = bin2hex(random_bytes(32));
 }
@@ -130,7 +130,7 @@ $datos      = [
     'jornada' => 'diurna', 'autorizacion' => false,
 ];
 
-/* Oferta academica: fuente de verdad = tabla programas en PostgreSQL. */
+/* Oferta académica: fuente de verdad = tabla programas en PostgreSQL. */
 try {
     $filasProgramas = db()
         ->query('SELECT codigo, nombre, duracion_horas FROM programas WHERE activo ORDER BY nombre')
@@ -140,14 +140,14 @@ try {
     error_log('Error de conexion a PostgreSQL: ' . $e->getMessage());
     $filasProgramas  = [];
     $programasValidos = [];
-    $errores['general'] = 'El servicio de preinscripcion no esta disponible en este momento. '
+    $errores['general'] = 'El servicio de preinscripción no está disponible en este momento. '
         . 'Intente mas tarde o acerquese a las instalaciones del Instituto.';
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     /* Verificacion del token CSRF. */
     if (!hash_equals($tokenSesion, $_POST['csrf'] ?? '')) {
-        $errores['general'] = 'La sesion expiro o el envio no es valido. Vuelva a cargar el formulario.';
+        $errores['general'] = 'La sesión expiró o el envío no es válido. Vuelva a cargar el formulario.';
     } else {
         [$datos, $errores] = validar($_POST, $programasValidos);
 
@@ -188,10 +188,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($e->getCode() === '23505') {
                     /* Restriccion unica documento+programa. */
                     $errores['numero_documento'] =
-                        'Ya existe una preinscripcion con ese documento para el programa seleccionado.';
+                        'Ya existe una preinscripción con ese documento para el programa seleccionado.';
                 } else {
-                    error_log('Error al registrar preinscripcion: ' . $e->getMessage());
-                    $errores['general'] = 'No fue posible guardar la preinscripcion. Intente de nuevo en unos minutos.';
+                    error_log('Error al registrar preinscripción: ' . $e->getMessage());
+                    $errores['general'] = 'No fue posible guardar la preinscripción. Intente de nuevo en unos minutos.';
                 }
             }
         }
@@ -200,7 +200,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 /* --------------------------------- Salida --------------------------------- */
 
-cabecera('Preinscripcion', 'inscripcion');
+cabecera('Preinscripción', 'inscripcion');
 
 if ($registrado !== null):
     /* ---------------------- Confirmacion de registro ---------------------- */
@@ -213,7 +213,7 @@ if ($registrado !== null):
     }
     ?>
     <section class="mensaje exito">
-        <h1>Preinscripcion registrada</h1>
+        <h1>Preinscripción registrada</h1>
         <p>
             Gracias, <strong><?= e($registrado['nombres'] . ' ' . $registrado['apellidos']) ?></strong>.
             Sus datos quedaron registrados en el sistema del Instituto.
@@ -222,11 +222,11 @@ if ($registrado !== null):
             Programa: <strong><?= e($nombrePrograma) ?></strong> -
             jornada <strong><?= e(JORNADAS[$registrado['jornada']]) ?></strong>.
         </p>
-        <h2>Que sigue ahora</h2>
+        <h2>Qué sigue ahora</h2>
         <ol>
-            <li>La secretaria academica verificara su informacion y lo contactara al correo y telefono registrados.</li>
-            <li>Asistira a la <strong>entrevista de admision</strong> con el Coordinador de Bienestar Institucional (unico criterio de admision).</li>
-            <li>Con la admision, entregara la documentacion exigida y pagara la matricula segun su categoria de afiliacion.</li>
+            <li>La secretaria académica verificará su información y lo contactará al correo y telefono registrados.</li>
+            <li>Asistirá a la <strong>entrevista de admisión</strong> con el Coordinador de Bienestar Institucional (único criterio de admisión).</li>
+            <li>Con la admisión, entregará la documentación exigida y pagará la matrícula según su categoría de afiliación.</li>
         </ol>
         <p class="nota">
             Registro realizado el <?= e(date('d/m/Y H:i')) ?>. Los datos personales se tratan
@@ -239,10 +239,10 @@ else:
     /* ---------------------------- Formulario ------------------------------ */
     ?>
     <section class="pagina-formulario">
-        <h1>Formulario de preinscripcion</h1>
+        <h1>Formulario de preinscripción</h1>
         <p class="introduccion">
-            Complete sus datos para iniciar el proceso de admision. La inscripcion
-            tambien puede hacerse de forma presencial en las instalaciones del
+            Complete sus datos para iniciar el proceso de admisión. La inscripcion
+            también puede hacerse de forma presencial en las instalaciones del
             Instituto (PEI, seccion 3.1.2.1).
         </p>
 
@@ -250,7 +250,7 @@ else:
             <p class="mensaje error"><?= e($errores['general']) ?></p>
         <?php elseif (empty($filasProgramas) && $_SERVER['REQUEST_METHOD'] === 'GET'): ?>
             <p class="mensaje aviso">
-                En este momento no se puede cargar la oferta academica desde la base de datos.
+                En este momento no se puede cargar la oferta académica desde la base de datos.
                 Intente mas tarde.
             </p>
         <?php endif; ?>
@@ -259,7 +259,7 @@ else:
             <input type="hidden" name="csrf" value="<?= e($tokenSesion) ?>">
 
             <fieldset>
-                <legend>Identificacion del aspirante</legend>
+                <legend>Identificación del aspirante</legend>
 
                 <div class="campo">
                     <label for="nombres">Nombres *</label>
@@ -290,7 +290,7 @@ else:
                 </div>
 
                 <div class="campo media">
-                    <label for="numero_documento">Numero de documento *</label>
+                    <label for="numero_documento">Número de documento *</label>
                     <input type="text" id="numero_documento" name="numero_documento" inputmode="numeric"
                            pattern="[0-9]{5,12}" maxlength="12" required
                            value="<?= e($datos['numero_documento']) ?>">
@@ -309,14 +309,14 @@ else:
                 <legend>Contacto</legend>
 
                 <div class="campo media">
-                    <label for="correo">Correo electronico *</label>
+                    <label for="correo">Correo electrónico *</label>
                     <input type="email" id="correo" name="correo" maxlength="120" required
                            value="<?= e($datos['correo']) ?>">
                     <?php if (isset($errores['correo'])): ?><p class="error-campo"><?= e($errores['correo']) ?></p><?php endif; ?>
                 </div>
 
                 <div class="campo media">
-                    <label for="telefono">Telefono / celular *</label>
+                    <label for="telefono">Teléfono / celular *</label>
                     <input type="tel" id="telefono" name="telefono" maxlength="20" required
                            placeholder="606 7368976"
                            value="<?= e($datos['telefono']) ?>">
@@ -325,10 +325,10 @@ else:
             </fieldset>
 
             <fieldset>
-                <legend>Programa de interes</legend>
+                <legend>Programa de interés</legend>
 
                 <div class="campo">
-                    <label for="programa">Programa tecnico laboral *</label>
+                    <label for="programa">Programa técnico laboral *</label>
                     <select id="programa" name="programa" required>
                         <option value="" disabled <?= $datos['programa'] === '' ? 'selected' : '' ?>>Seleccione un programa</option>
                         <?php foreach ($filasProgramas as $p): ?>
@@ -352,26 +352,26 @@ else:
             </fieldset>
 
             <fieldset>
-                <legend>Autorizacion de datos personales</legend>
+                <legend>Autorización de datos personales</legend>
                 <div class="campo chequeo">
                     <label class="etiqueta-chequeo">
                         <input type="checkbox" name="autorizacion" value="1" required
                                <?= $datos['autorizacion'] ? 'checked' : '' ?>>
-                        Autorizo al Instituto Tecnico de Educacion Comfenalco Quindio a recolectar,
-                        almacenar y usar mis datos personales unicamente para el proceso de admision,
-                        matricula y comunicaciones academicas, conforme a la Ley 1581 de 2012. *
+                        Autorizo al Instituto Técnico de Educación Comfenalco Quindío a recolectar,
+                        almacenar y usar mis datos personales unicamente para el proceso de admisión,
+                        matrícula y comunicaciones academicas, conforme a la Ley 1581 de 2012. *
                     </label>
                     <?php if (isset($errores['autorizacion'])): ?><p class="error-campo"><?= e($errores['autorizacion']) ?></p><?php endif; ?>
                 </div>
             </fieldset>
 
             <p class="nota">
-                Los campos marcados con * son obligatorios. La entrevista de admision es el
-                unico criterio de ingreso; para Preparatorio Musical y Liniero en Redes de
-                Energia se aplican ademas pruebas de conocimientos.
+                Los campos marcados con * son obligatorios. La entrevista de admisión es el
+                único criterio de ingreso; para Preparatorio Musical y Liniero en Redes de
+                Energía se aplican ademas pruebas de conocimientos.
             </p>
 
-            <button type="submit" class="boton">Enviar preinscripcion</button>
+            <button type="submit" class="boton">Enviar preinscripción</button>
         </form>
     </section>
     <?php

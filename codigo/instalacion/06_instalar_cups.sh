@@ -119,12 +119,12 @@ log "Respuesta de la interfaz web (HTTPS con certificado propio/PKI):"
 curl -ksS -o /dev/null -w "  HTTP %{http_code}\n" "https://127.0.0.1:${PUERTO}/" || true
 
 log "Colas de impresion registradas (cups-pdf crea la cola PDF):"
-lpstat -p 2>/dev/null | sed 's/^/  /' || info "Sin colas todavia: agregue impresoras desde https://192.168.1.10:${PUERTO}"
+lpstat -p 2>/dev/null | sed 's/^/  /' || info "Sin colas todavia: agregue impresoras desde https://192.168.80.10:${PUERTO}"
 
 # ========================= Resumen =============================================
 log "Servidor de impresion configurado."
 echo "------------------------------------------------------------"
-echo " Interfaz web    : https://192.168.1.10:${PUERTO}"
+echo " Interfaz web    : https://192.168.80.10:${PUERTO}"
 echo " Impresora virtual: cola 'PDF' (salida en ~/PDF del usuario)"
 echo " Administracion  : usuarios en el grupo lpadmin"
 echo " Firewall        : puerto ${PUERTO}/tcp+udp solo para la LAN (ufw_reglas.sh)"
@@ -136,5 +136,5 @@ echo "   ls ~/PDF                      (el PDF generado)"
 echo "------------------------------------------------------------"
 echo " Agregar una impresora fisica:"
 echo "   Panel > Administration > Add Printer (IPP Everywhere si es moderna)"
-echo "   o: lpadmin -p Sala101 -E -v ipp://192.168.1.50/ipp/print -m everywhere"
+echo "   o: lpadmin -p Sala101 -E -v ipp://192.168.80.50/ipp/print -m everywhere"
 echo "------------------------------------------------------------"

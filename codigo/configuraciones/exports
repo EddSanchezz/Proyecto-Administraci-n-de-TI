@@ -19,6 +19,6 @@
 # ============================================================================
 
 # === PROYECTO ITEC - exportaciones para las salas Linux ===
-/srv/compartido/academicos  192.168.1.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
-/srv/compartido/publico     192.168.1.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
+/srv/compartido/academicos  192.168.80.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
+/srv/compartido/publico     192.168.80.0/24(rw,sync,no_subtree_check,root_squash,no_crossmnt)
 # === FIN PROYECTO ITEC ===

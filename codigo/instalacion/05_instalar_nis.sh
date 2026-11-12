@@ -11,7 +11,7 @@
 #   - Modo maestro: NISSERVER=master en /etc/default/nis.
 #   - ypserv fijado en el puerto 834 (YPSERVARGS="-p 834") para filtrarlo
 #     con UFW; rpcbind (111) queda tambien restringido a la LAN.
-#   - /var/yp/securenets: solo localhost y 192.168.1.0/24 pueden consultar.
+#   - /var/yp/securenets: solo localhost y 192.168.80.0/24 pueden consultar.
 #   - Mapas passwd+shadow fusionados (MERGE_PASSWD/MERGE_GROUP) para que el
 #     inicio de sesion de los estudiantes funcione en las salas.
 #
@@ -28,7 +28,7 @@ set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
 DOMINIO_NIS="itec.local"
-RED_LAN="192.168.1.0/24"
+RED_LAN="192.168.80.0/24"
 PUERTO_YPSERV="834"
 FECHA="$(date +%Y%m%d-%H%M%S)"
 
@@ -77,7 +77,7 @@ cat > /var/yp/securenets <<EOF
 # PROYECTO ITEC - clientes autorizados del servidor NIS
 # host    red
 255.0.0.0    127.0.0.0
-255.255.255.0 192.168.1.0
+255.255.255.0 192.168.80.0
 EOF
 chmod 644 /var/yp/securenets
 
@@ -149,17 +149,17 @@ info "'ypserv -p ${PUERTO_YPSERV}' para confirmar, y luego ajuste /etc/default/n
 log "Servidor NIS configurado."
 echo "------------------------------------------------------------"
 echo " Dominio NIS   : ${DOMINIO_NIS}"
-echo " Servidor      : 192.168.1.10 (ypserv en ${PUERTO_YPSERV} + rpcbind 111)"
+echo " Servidor      : 192.168.80.10 (ypserv en ${PUERTO_YPSERV} + rpcbind 111)"
 echo " Red autorizada: ${RED_LAN} (secretnets + UFW)"
 echo "------------------------------------------------------------"
 echo " Alta de estudiantes por lote:"
 echo "   sudo bash codigo/configuraciones/usuarios_nis.sh alta usuarios.csv"
 echo " Configuracion de un CLIENTE Linux de sala:"
 echo "   sudo apt install nis"
-echo "   echo 'domain ${DOMINIO_NIS} server 192.168.1.10' >> /etc/yp.conf"
+echo "   echo 'domain ${DOMINIO_NIS} server 192.168.80.10' >> /etc/yp.conf"
 echo "   sudo systemctl enable --now rpcbind nis"
 echo "   sudo sed -i 's/^passwd:.*/passwd: compat nis/' /etc/nsswitch.conf"
 echo "   sudo sed -i 's/^group:.*/group: compat nis/'  /etc/nsswitch.conf"
 echo "   ypcat passwd   (listar cuentas)"
-echo "   ypwhich        (debe responder 192.168.1.10)"
+echo "   ypwhich        (debe responder 192.168.80.10)"
 echo "------------------------------------------------------------"

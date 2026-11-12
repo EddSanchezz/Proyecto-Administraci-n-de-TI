@@ -42,9 +42,43 @@ CONTENEDOR_BD="${CONTENEDOR_BD:-}"
 FECHA="$(date +%Y-%m-%d_%H%M)"
 RUTA_INSTALADA="/usr/local/sbin/itec-respaldo.sh"
 
+ERROR_BD=0
+
 # ----------------------------- Utilidades -----------------------------------
 log()  { echo "[$(date '+%F %T')] $*"; }
 err()  { echo "[$(date '+%F %T')] [ERROR] $*" >&2; }
+
+# Localiza el contenedor de PostgreSQL de la aplicacion.
+#
+# En un servidor con Dokploy conviven DOS PostgreSQL: el interno de Dokploy y
+# el de la aplicacion web. Por eso NO basta con buscar 'postgres' en el nombre:
+# se excluye cualquier contenedor de Dokploy y se comprueba que la base
+# 'itec' exista y responda con el usuario de la aplicacion.
+detectar_contenedor_bd() {
+    if [[ -n "${CONTENEDOR_BD}" ]]; then
+        return 0
+    fi
+    if ! command -v docker >/dev/null 2>&1; then
+        return 1
+    fi
+
+    local candidato
+    while IFS= read -r candidato; do
+        [[ -z "${candidato}" ]] && continue
+        if docker exec "${candidato}" psql -U "${BD_USUARIO}" -d "${BD_NOMBRE}" \
+                -c 'SELECT 1' >/dev/null 2>&1; then
+            CONTENEDOR_BD="${candidato}"
+            return 0
+        fi
+    done < <(
+        docker ps --format '{{.Names}}\t{{.Image}}' \
+            | awk -F'\t' 'tolower($2) ~ /postgres/ {print $1}' \
+            | grep -vi 'dokploy' \
+            || true
+    )
+
+    return 1
+}
 
 # ----------------------------- Verificaciones -------------------------------
 if [[ $EUID -ne 0 ]]; then
@@ -76,26 +110,32 @@ respaldar() {
     fi
 
     # ------------------------- 2. PostgreSQL --------------------------------
-    # Localizar el contenedor de PostgreSQL de la aplicacion si no se indico.
-    if [[ -z "${CONTENEDOR_BD}" ]] && command -v docker >/dev/null 2>&1; then
-        CONTENEDOR_BD="$(docker ps --format '{{.Names}}' | grep -i postgres | head -n 1 || true)"
-    fi
-
-    if [[ -n "${CONTENEDOR_BD}" ]]; then
+    if detectar_contenedor_bd; then
         ARCHIVO_SQL="${DIR_RESPALDOS}/postgresql_${FECHA}.sql.gz.enc"
         if [[ -r "${CLAVE}" ]]; then
-            docker exec "${CONTENEDOR_BD}" pg_dump -U "${BD_USUARIO}" "${BD_NOMBRE}" \
-                | gzip \
-                | openssl enc -aes-256-cbc -pbkdf2 -salt -pass "file:${CLAVE}" \
-                > "${ARCHIVO_SQL}"
-            log "Base de datos '${BD_NOMBRE}' respaldada y CIFRADA desde ${CONTENEDOR_BD}: ${ARCHIVO_SQL}"
+            if docker exec "${CONTENEDOR_BD}" pg_dump -U "${BD_USUARIO}" "${BD_NOMBRE}" \
+                    | gzip \
+                    | openssl enc -aes-256-cbc -pbkdf2 -salt -pass "file:${CLAVE}" \
+                    > "${ARCHIVO_SQL}"; then
+                log "Base de datos '${BD_NOMBRE}' respaldada y CIFRADA desde ${CONTENEDOR_BD}: ${ARCHIVO_SQL}"
+            else
+                rm -f "${ARCHIVO_SQL}"
+                err "Fallo el volcado de PostgreSQL desde ${CONTENEDOR_BD}."
+                ERROR_BD=1
+            fi
         else
-            docker exec "${CONTENEDOR_BD}" pg_dump -U "${BD_USUARIO}" "${BD_NOMBRE}" \
-                | gzip > "${DIR_RESPALDOS}/postgresql_${FECHA}.sql.gz"
-            log "Base de datos '${BD_NOMBRE}' respaldada (SIN cifrar) desde ${CONTENEDOR_BD}."
+            if docker exec "${CONTENEDOR_BD}" pg_dump -U "${BD_USUARIO}" "${BD_NOMBRE}" \
+                    | gzip > "${DIR_RESPALDOS}/postgresql_${FECHA}.sql.gz"; then
+                log "Base de datos '${BD_NOMBRE}' respaldada (SIN cifrar) desde ${CONTENEDOR_BD}."
+            else
+                err "Fallo el volcado de PostgreSQL desde ${CONTENEDOR_BD}."
+                ERROR_BD=1
+            fi
         fi
     else
-        log "Aviso: no hay contenedor PostgreSQL activo (se omite el volcado)."
+        err "No se encontro un contenedor PostgreSQL con la base '${BD_NOMBRE}' (se omite el volcado)."
+        err "Indique el contenedor correcto con: CONTENEDOR_BD=<nombre> $0"
+        ERROR_BD=1
     fi
 
     # ------------------------- 3. Retencion ---------------------------------
@@ -107,6 +147,11 @@ respaldar() {
     log "Contenido actual de ${DIR_RESPALDOS}:"
     ls -lh "${DIR_RESPALDOS}" | tail -n +2 | sed 's/^/  /'
     log "Respaldo terminado."
+
+    if [[ "${ERROR_BD}" -ne 0 ]]; then
+        err "El respaldo termino con errores en la base de datos."
+        exit 1
+    fi
 }
 
 # ------------------------- Modo: instalar ------------------------------------

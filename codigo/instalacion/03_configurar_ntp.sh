@@ -5,7 +5,7 @@
 # Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
 # Instituto Tecnico de Educacion Comfenalco Quindio
 #
-# Convierte el servidor en el servidor de tiempo de la LAN (192.168.1.0/24):
+# Convierte el servidor en el servidor de tiempo de la LAN (192.168.80.0/24):
 #   - Instala ntpsec: en Ubuntu 24.04 el paquete 'ntp' es transitorio hacia
 #     ntpsec (ntpd + ntpq, configuracion en /etc/ntpsec/ntp.conf).
 #   - Despliega la configuracion de codigo/configuraciones/ntp.conf:
@@ -16,7 +16,7 @@
 #   sudo bash 03_configurar_ntp.sh
 #
 # Verificacion en clientes:
-#   Linux:   ntpdate -q 192.168.1.10   o   chronyd/ntpd apuntando al servidor
+#   Linux:   ntpdate -q 192.168.80.10   o   chronyd/ntpd apuntando al servidor
 #   Windows: w32tm /query /status tras apuntar al NTP interno
 #
 # Firewall: el puerto 123/udp solo se abre para la LAN en
@@ -26,7 +26,7 @@
 set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
-RED_LAN="192.168.1.0/24"
+RED_LAN="192.168.80.0/24"
 CONF_DESTINO="/etc/ntpsec/ntp.conf"
 FECHA="$(date +%Y%m%d-%H%M%S)"
 
@@ -103,13 +103,13 @@ ss -uln | grep ':123 ' || info "Nota: ntpd puede tardar unos segundos en abrir e
 # ========================= Resumen ===========================================
 log "Servidor NTP configurado."
 echo "------------------------------------------------------------"
-echo " Servidor de tiempo : 192.168.1.10 (puerto 123/udp, solo LAN)"
+echo " Servidor de tiempo : 192.168.80.10 (puerto 123/udp, solo LAN)"
 echo " Verificar         : ntpq -p   |   timedatectl"
 echo "------------------------------------------------------------"
 echo " Configuracion de clientes:"
-echo "   Linux (chrony):  server 192.168.1.10 iburst  en /etc/chrony/chrony.conf"
+echo "   Linux (chrony):  server 192.168.80.10 iburst  en /etc/chrony/chrony.conf"
 echo "                   luego: systemctl restart chrony && chronyc sources"
-echo "   Linux (ntpsec):  server 192.168.1.10 iburst  en /etc/ntpsec/ntp.conf"
-echo "   Windows (admin): w32tm /config /manualpeerlist:192.168.1.10 /syncfromflags:manual /update"
+echo "   Linux (ntpsec):  server 192.168.80.10 iburst  en /etc/ntpsec/ntp.conf"
+echo "   Windows (admin): w32tm /config /manualpeerlist:192.168.80.10 /syncfromflags:manual /update"
 echo "                   luego: w32tm /query /status"
 echo "------------------------------------------------------------"

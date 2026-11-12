@@ -9,7 +9,7 @@
 # valido para:
 #   - itec-quindio.duckdns.org (dominio publico del proyecto)
 #   - itec-server / itec-server.lan (nombre interno del servidor)
-#   - 192.168.1.10 y localhost (acceso directo por IP)
+#   - 192.168.80.10 y localhost (acceso directo por IP)
 #
 # Ventajas frente a un certificado autofirmado simple: solo se importa la CA
 # (ca.crt) en los clientes y TODOS los servicios del servidor que presenten
@@ -47,7 +47,9 @@ TAMANO_RSA="4096"
 PAIS="CO"
 ORG="Instituto Tecnico de Educacion Comfenalco Quindio"
 OU="Infraestructura de TI"
-CN_DOMINIO="itec-quindio.duckdns.org"
+# Dominio principal del despliegue. En el laboratorio se usa sslip.io porque
+# resuelve sin registro y sin IP publica; DuckDNS queda como alternativa.
+CN_DOMINIO="${CN_DOMINIO:-itec.192-168-80-10.sslip.io}"
 FECHA="$(date +%Y%m%d-%H%M%S)"
 
 # ----------------------------- Utilidades -----------------------------------
@@ -112,7 +114,8 @@ DNS.1 = ${CN_DOMINIO}
 DNS.2 = itec-server
 DNS.3 = itec-server.lan
 DNS.4 = localhost
-IP.1  = 192.168.1.10
+DNS.5 = itec-quindio.duckdns.org
+IP.1  = 192.168.80.10
 IP.2  = 127.0.0.1
 EOF
 
@@ -132,7 +135,8 @@ DNS.1 = ${CN_DOMINIO}
 DNS.2 = itec-server
 DNS.3 = itec-server.lan
 DNS.4 = localhost
-IP.1  = 192.168.1.10
+DNS.5 = itec-quindio.duckdns.org
+IP.1  = 192.168.80.10
 IP.2  = 127.0.0.1
 EOF
 

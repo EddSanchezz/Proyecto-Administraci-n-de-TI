@@ -19,7 +19,7 @@
 #   publico     -> todos los usuarios con cuenta (rw en publico)
 #
 # Solo se exporta por NFS lo acordado en el diseño: academicos y publico,
-# restringido a la red 192.168.1.0/24, con root_squash (el root del cliente
+# restringido a la red 192.168.80.0/24, con root_squash (el root del cliente
 # no obtiene privilegios de root en el servidor).
 #
 # Se fuerza NFSv4 en el puerto 2049/tcp (sin v3, sin puertos aleatorios de
@@ -34,7 +34,7 @@
 set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
-RED_LAN="192.168.1.0/24"
+RED_LAN="192.168.80.0/24"
 DIR_BASE="/srv/compartido"
 CARPETAS=(academicos secretaria contabilidad publico)
 GRUPOS=(academicos secretaria contabilidad publico)
@@ -148,11 +148,11 @@ echo " Protocolo          : NFSv4.1/4.2 solo por 2049/tcp"
 echo "------------------------------------------------------------"
 echo " Montaje en un cliente Linux de sala:"
 echo "   sudo mkdir -p /mnt/{academicos,publico}"
-echo "   sudo mount -t nfs 192.168.1.10:/srv/compartido/academicos /mnt/academicos"
-echo "   sudo mount -t nfs 192.168.1.10:/srv/compartido/publico     /mnt/publico"
+echo "   sudo mount -t nfs 192.168.80.10:/srv/compartido/academicos /mnt/academicos"
+echo "   sudo mount -t nfs 192.168.80.10:/srv/compartido/publico     /mnt/publico"
 echo "   df -h /mnt/academicos"
 echo " Persistente en el cliente (/etc/fstab):"
-echo "   192.168.1.10:/srv/compartido/academicos /mnt/academicos nfs4 defaults,_netdev 0 0"
+echo "   192.168.80.10:/srv/compartido/academicos /mnt/academicos nfs4 defaults,_netdev 0 0"
 echo "------------------------------------------------------------"
 echo " Usuarios: agregue cuentas a los grupos con usuarios_nis.sh"
 echo " (codigo/configuraciones) y reconstruya los mapas NIS."

@@ -14,15 +14,15 @@
 #   80/tcp  HTTP (Traefik)        cualquier origen (redireccion a HTTPS
 #                                 y validacion Let's Encrypt)
 #   443/tcp HTTPS (Traefik)       cualquier origen
-#   3000/tcp Panel Dokploy        solo 192.168.1.0/24
-#   5432/tcp PostgreSQL           solo 192.168.1.0/24
-#   123/udp NTP                   solo 192.168.1.0/24
-#   111     rpcbind               solo 192.168.1.0/24 (clientes NIS)
-#   834     ypserv (NIS)          solo 192.168.1.0/24 (puerto fijado con -p)
-#   2049/tcp NFSv4                solo 192.168.1.0/24
-#   445/tcp Samba                 solo 192.168.1.0/24 (solo SMB directo,
+#   3000/tcp Panel Dokploy        solo 192.168.80.0/24
+#   5432/tcp PostgreSQL           solo 192.168.80.0/24
+#   123/udp NTP                   solo 192.168.80.0/24
+#   111     rpcbind               solo 192.168.80.0/24 (clientes NIS)
+#   834     ypserv (NIS)          solo 192.168.80.0/24 (puerto fijado con -p)
+#   2049/tcp NFSv4                solo 192.168.80.0/24
+#   445/tcp Samba                 solo 192.168.80.0/24 (solo SMB directo,
 #                                 sin NetBIOS 137-139)
-#   631     CUPS (IPP)            solo 192.168.1.0/24
+#   631     CUPS (IPP)            solo 192.168.80.0/24
 #
 # IMPORTANTE - Docker y UFW: los puertos que Docker publica (por ejemplo el
 # 3000 del panel de Dokploy) NO pasan por las reglas UFW de INPUT porque van
@@ -41,7 +41,7 @@
 set -euo pipefail
 
 # ----------------------------- Parametros fijos -----------------------------
-RED_LAN="192.168.1.0/24"
+RED_LAN="${RED_LAN:-192.168.80.0/24}"
 PUERTOS_LAN_TCP=(3000 5432 2049 445 631 111 834)
 PUERTOS_LAN_UDP=(123 631 111 834)
 PUERTOS_PUBLICOS_TCP=(22 80 443)
@@ -112,7 +112,7 @@ if command -v docker >/dev/null 2>&1 && command -v iptables >/dev/null 2>&1; the
 # Reglas DOCKER-USER para puertos publicados por Docker (proyecto ITEC).
 # Ejecutado por itec-docker-user.service en cada arranque (tras Docker).
 set -euo pipefail
-RED_LAN="192.168.1.0/24"
+RED_LAN="__RED_LAN__"
 
 # No tocar la cadena si Docker aun no la creo.
 iptables -L DOCKER-USER -n >/dev/null 2>&1 || exit 0
@@ -128,6 +128,7 @@ for puerto in 3000 5432; do
         iptables -I DOCKER-USER 2 -p tcp --dport "${puerto}" ! -s "${RED_LAN}" -j DROP
 done
 EOF
+    sed -i "s|__RED_LAN__|${RED_LAN}|g" "${HELPER}"
     chmod 700 "${HELPER}"
 
     cat > /etc/systemd/system/itec-docker-user.service <<EOF
@@ -163,8 +164,8 @@ ufw status verbose
 
 echo "------------------------------------------------------------"
 echo " Verificar desde un equipo de la LAN:"
-echo "   ssh usuario@192.168.1.10        (debe conectar)"
-echo "   curl -I http://192.168.1.10      (responde Traefik)"
+echo "   ssh usuario@192.168.80.10        (debe conectar)"
+echo "   curl -I http://192.168.80.10      (responde Traefik)"
 echo " Desde FUERA de la LAN: 3000, 5432, 2049, 445, 631, 123, 834 y 111"
 echo " deben rechazarse (timeout)."
 echo "------------------------------------------------------------"

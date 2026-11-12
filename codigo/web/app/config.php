@@ -4,7 +4,7 @@
  * config.php - Configuracion comun de la aplicacion web ITEC
  * ----------------------------------------------------------------------------
  * Proyecto Final - Administracion de Infraestructura de TI (Uniquindio 2026-1)
- * Instituto Tecnico de Educacion Comfenalco Quindio
+ * Instituto Técnico de Educación Comfenalco Quindío
  *
  * Toda la configuracion sensible entra por variables de entorno (buenas
  * practicas de doce factores), definidas:
@@ -68,7 +68,7 @@ function cabecera(string $titulo, string $activo = ''): void
 {
     $paginas = [
         ''            => 'Inicio',
-        'inscripcion' => 'Preinscripcion',
+        'inscripcion' => 'Preinscripción',
     ];
     $nav = '';
     foreach ($paginas as $ruta => $etiqueta) {
@@ -82,7 +82,7 @@ function cabecera(string $titulo, string $activo = ''): void
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($titulo) ?> - Instituto Tecnico de Educacion Comfenalco Quindio</title>
+    <title><?= e($titulo) ?> - Instituto Técnico de Educación Comfenalco Quindío</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -90,7 +90,7 @@ function cabecera(string $titulo, string $activo = ''): void
         <div class="contenedor barra">
             <a class="marca" href="index.php">
                 <span class="marca-sigla">ITEC</span>
-                <span class="marca-texto">Instituto Tecnico de Educacion<br>Comfenalco Quindio</span>
+                <span class="marca-texto">Instituto Técnico de Educación<br>Comfenalco Quindío</span>
             </a>
             <nav class="navegacion"><?= $nav ?></nav>
         </div>
@@ -106,12 +106,12 @@ function pie(): void
     <footer class="pie-sitio">
         <div class="contenedor">
             <p>
-                Instituto Tecnico de Educacion Comfenalco Quindio - NIT 890000381-0 -
+                Instituto Técnico de Educación Comfenalco Quindío - NIT 890000381-0 -
                 Licencia de funcionamiento 1712 del 8 de septiembre de 2020.
             </p>
             <p>
                 Sitio desarrollado como Proyecto Final del curso Administracion de
-                Infraestructura de TI - Universidad del Quindio, 2026-1.
+                Infraestructura de TI - Universidad del Quindío, 2026-1.
             </p>
         </div>
     </footer>

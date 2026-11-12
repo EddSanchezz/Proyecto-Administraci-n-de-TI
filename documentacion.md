@@ -5,7 +5,8 @@
 | | |
 |---|---|
 | **Empresa** | Instituto Técnico de Educación Comfenalco Quindío |
-| **Servidor** | Ubuntu Server 24.04 LTS · `192.168.1.10` · hostname `itec-server` |
+| **Servidor** | Ubuntu Server 24.04 LTS · `192.168.80.10` · hostname `itec-server` |
+| **Dominio** | `https://itec.192-168-80-10.sslip.io` (DNS gratuito sin registro) |
 | **Equipo** | Esteban · Jerónimo · Brahian · Jack Alejandro Marín Hernández |
 
 > Plantilla de trabajo: completar cada sección durante las semanas 2–4. Por cada servicio se documenta: **procedimiento de instalación**, **comandos de verificación y pruebas**, **capturas de evidencia** (guardarlas en `capturas/`) y **problemas encontrados con su solución**.
@@ -33,15 +34,15 @@
 
 - [ ] Crear VM en VirtualBox/VMware: 2 vCPU, 4 GB RAM, 40 GB disco, red bridged
 - [ ] Instalar Ubuntu Server 24.04 LTS con hostname `itec-server`
-- [ ] Configurar IP estática `192.168.1.10/24`, gateway `192.168.1.1`
+- [ ] Configurar IP estática `192.168.80.10/24`, gateway `192.168.80.1`
 - [ ] Crear usuario administrador y habilitar SSH
 
 **Verificación**
 
 ```
-ip a                          # confirmar IP 192.168.1.10
+ip a                          # confirmar IP 192.168.80.10
 ping -c 3 8.8.8.8             # salida a internet
-ssh usuario@192.168.1.10      # acceso remoto
+ssh usuario@192.168.80.10      # acceso remoto
 ```
 
 **Evidencias:** `capturas/01_vm/`
@@ -55,7 +56,7 @@ ssh usuario@192.168.1.10      # acceso remoto
 **Procedimiento** — script: `codigo/instalacion/02_instalar_dokploy.sh`
 
 - [ ] Instalar Docker (si no está) y ejecutar el instalador oficial de Dokploy
-- [ ] Acceder al panel en `http://192.168.1.10:3000` y crear cuenta de administrador
+- [ ] Acceder al panel en `http://192.168.80.10:3000` y crear cuenta de administrador
 
 **Verificación**
 
@@ -72,10 +73,10 @@ systemctl status docker
 
 ## 3. Dominio/DNS y SSL/TLS
 
-- [ ] Registrar subdominio en DuckDNS (`itec-quindio.duckdns.org`) — script: `codigo/configuraciones/duckdns.sh`
-- [ ] Configurar Let's Encrypt desde Dokploy/Traefik (o certificado autofirmado con `codigo/ssl/certificado_autofirmado.sh`)
+- [ ] Dominio/DNS: en el laboratorio se usa `itec.192-168-80-10.sslip.io` (DNS gratuito sin registro; resuelve a `192.168.80.10`). La variante DuckDNS (`itec-quindio.duckdns.org`) queda documentada para cuando exista IP pública; script: `codigo/configuraciones/duckdns.sh`.
+- [ ] Certificado TLS: CA propia + certificado del servidor con `codigo/ssl/certificado_autofirmado.sh`; importar `ca.crt` en los clientes y asociar el certificado al dominio en Dokploy. Let's Encrypt queda como alternativa si los puertos 80/443 están reenviados.
 
-**Verificación:** `https://itec-quindio.duckdns.org` carga sin advertencias; candado verde.
+**Verificación:** `https://itec.192-168-80-10.sslip.io` carga sin advertencias; candado verde (CA importada).
 
 **Evidencias:** `capturas/03_dns_ssl/`
 
@@ -92,7 +93,7 @@ systemctl status docker
 ```
 ntpq -p                       # el servidor sincroniza con pool.ntp.org
 # Cliente Linux:
-chronyc tracking  |  ntpq -p  # apunta a 192.168.1.10
+chronyc tracking  |  ntpq -p  # apunta a 192.168.80.10
 # Cliente Windows:
 w32tm /query /status
 ```
@@ -148,7 +149,7 @@ sudo systemctl enable --now nfs-kernel-server
 **Verificación (cliente Linux de sala)**
 
 ```
-sudo mount -t nfs 192.168.1.10:/srv/compartido/academicos /mnt/academicos
+sudo mount -t nfs 192.168.80.10:/srv/compartido/academicos /mnt/academicos
 df -h /mnt/academicos
 ```
 
@@ -179,7 +180,7 @@ ypwhich                           # servidor NIS en uso
 
 **Procedimiento** — script: `codigo/instalacion/06_instalar_cups.sh` · configuración: `codigo/configuraciones/cupsd.conf` (incluye la impresora virtual PDF para evidenciar colas sin impresora física)
 
-**Verificación:** administrar impresoras en `https://192.168.1.10:631`; imprimir página de prueba desde un cliente.
+**Verificación:** administrar impresoras en `https://192.168.80.10:631`; imprimir página de prueba desde un cliente.
 
 **Evidencias:** `capturas/09_cups/`
 
@@ -194,7 +195,7 @@ ypwhich                           # servidor NIS en uso
 **Verificación**
 
 ```
-smbclient //192.168.1.10/secretaria -U usuario
+smbclient //192.168.80.10/secretaria -U usuario
 # Desde Windows: \\itec-server\secretaria
 ```
 
