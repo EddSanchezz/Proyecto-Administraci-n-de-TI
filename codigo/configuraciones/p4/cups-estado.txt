@@ -1,0 +1,8 @@
+el planificador de tareas se está ejecutando
+destino predeterminado del sistema: PDF
+dispositivo para Impresora_Empresa: cups-pdf:/
+dispositivo para PDF: cups-pdf:/
+Impresora_Empresa aceptando peticiones desde jue 12 nov 2026 23:15:41
+PDF aceptando peticiones desde jue 12 nov 2026 22:42:13
+la impresora Impresora_Empresa está inactiva.  activada desde jue 12 nov 2026 23:15:41
+la impresora PDF está inactiva.  activada desde jue 12 nov 2026 22:42:13

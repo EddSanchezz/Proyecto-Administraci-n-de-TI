@@ -29,3 +29,8 @@ completa y el candado HTTPS.
 `NN_descripcion_corta.png` (por ejemplo `03_ip_hostname.png`). Se conserva la
 fecha visible en la captura; no se renombra el archivo para ocultar cuándo se
 tomó.
+
+Las evidencias de la ejecución **P4** usan el prefijo `p4-cXX-descripcion.png`
+y están en `01_vm/`, `04_ntp/`, `09_cups/`, `10_samba/` y `12_integracion/`.
+Corresponden a la VM de pruebas `kami-VirtualBox` (`192.168.1.50`, Ubuntu
+26.04.1 LTS), no al servidor del diseño grupal.
