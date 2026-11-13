@@ -1,7 +1,7 @@
 # Proyecto Final — Administración de Infraestructura de TI
 
 > Infraestructura de servicios TI para el **Instituto Técnico de Educación Comfenalco Quindío** — Dokploy (PaaS) + servicios Linux tradicionales.
-> Universidad del Quindío · Facultad de Ingeniería de Sistemas y Computación · Semestre 2026-1
+> Universidad del Quindío · Facultad de Ingeniería de Sistemas y Computación · Semestre 2026-2
 
 **Equipo (ingenieros):** Esteban · Jerónimo · Brahian · Jack Alejandro Marín Hernández
 
@@ -13,6 +13,7 @@
 | 2 | Infraestructura base (P1) | `codigo/instalacion/01-03` · `codigo/ssl/` · `codigo/configuraciones/` · `codigo/seguridad/` | Ejecutado en VM `itec-server` (192.168.80.10) |
 | 3 | Servicios (P1+P2) | `codigo/instalacion/02` · `codigo/web/` | Web + PostgreSQL (Dokploy) desplegados y verificados |
 | 4 | Documentación y presentación (P1+P2) | `documentacion.md` · `capturas/` | Evidencias reales de P1+P2 en `capturas/` |
+| 4 | Servicios de red y Windows (P4) | `codigo/configuraciones/p4/` · `capturas/04_ntp`, `09_cups`, `10_samba`, `12_integracion` | NTP + CUPS + Samba ejecutados y verificados en VM P4 (`192.168.1.50`) |
 
 ## Estructura del repositorio
 
@@ -65,6 +66,11 @@
 El código de las semanas 2 y 3 está escrito y documentado (ver `codigo/README.md`
 para el orden de ejecución y las notas de seguridad sobre secretos); falta
 ejecutarlo en la VM, verificar cada servicio y evidenciar.
+
+La parte **P4** (NTP, CUPS y Samba) ya se ejecutó en una VM de pruebas Ubuntu
+26.04.1 LTS (`192.168.1.50`); sus configuraciones exportadas están en
+`codigo/configuraciones/p4/` y sus evidencias en `capturas/04_ntp/`,
+`capturas/09_cups/` y `capturas/10_samba/`.
 
 ## Recursos
 

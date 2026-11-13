@@ -1,0 +1,2 @@
+empleado1:1001:
+kami:1000:kami

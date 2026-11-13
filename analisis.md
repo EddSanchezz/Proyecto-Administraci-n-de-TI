@@ -5,7 +5,7 @@
 | | |
 |---|---|
 | **Institución académica** | Universidad del Quindío — Facultad de Ingeniería de Sistemas y Computación |
-| **Semestre** | 2026-1 |
+| **Semestre** | 2026-2 |
 | **Equipo** | Esteban · Jerónimo · Brahian · Jack Alejandro Marín Hernández (equipo de ingenieros) |
 | **Empresa analizada** | Instituto Técnico de Educación Comfenalco Quindío |
 | **Plataforma central** | Dokploy (PaaS) sobre Ubuntu Server 24.04 LTS |
