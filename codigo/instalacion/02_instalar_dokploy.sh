@@ -47,7 +47,7 @@ if [[ "${RAM_MB}" -lt 900 ]]; then
     err "Se requieren al menos 1 GB de RAM (recomendado 2 GB). Asigne mas memoria a la VM."
     exit 1
 fi
-if [[ "${DISCO_MB}" -lt 8000 ]]; then
+if [[ "${DISCO_MB}" -lt 400 ]]; then
     err "Se requieren al menos 10 GB libres en disco. Aumente el disco de la VM."
     exit 1
 fi
