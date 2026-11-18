@@ -80,5 +80,3 @@ La parte **P4** (NTP, CUPS y Samba) ya se ejecutó en una VM de pruebas Ubuntu
 - Manuales: NFS · Samba · CUPS · [NTP Project](https://www.ntppool.org/es/) · NIS
 
 ---
-
-ssss
