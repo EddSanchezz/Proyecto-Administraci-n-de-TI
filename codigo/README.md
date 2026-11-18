@@ -86,3 +86,4 @@ Dos formas de desplegar la misma aplicación:
   está documentada en `analisis.md`, sección 5).
 - Los scripts son idempotentes (re-ejecutarlos no rompe la configuración) y
   respaldan cada archivo de sistema que modifican (`*.bak.<fecha>`).
+
