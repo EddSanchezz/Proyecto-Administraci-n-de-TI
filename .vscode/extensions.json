@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "marp-team.marp-vscode",
+    "bierner.markdown-mermaid",
+    "yzhang.markdown-all-in-one",
+    "streetsidesoftware.code-spell-checker",
+    "wayou.vscode-todo-highlight",
+    "eamodio.gitlens"
+  ]
+}
