@@ -232,43 +232,64 @@ docker exec -it <contenedor_db> psql -U itec_app -d itec -c "\dt"
 
 ## 7. Servicio NFS
 
-**Procedimiento** — script: `codigo/instalacion/04_instalar_nfs.sh` · configuración: `codigo/configuraciones/exports` (crea el árbol y los grupos; exporta `academicos` y `publico` solo para la LAN, NFSv4 único en 2049/tcp)
 
-```
-sudo apt install nfs-kernel-server -y
-sudo mkdir -p /srv/compartido/{academicos,secretaria,contabilidad,publico}
-sudo nano /etc/exports
-sudo exportfs -ra
-sudo systemctl enable --now nfs-kernel-server
-```
+### Instalacion
+usando el script `codigo/instalacion/04_instalar_nfs.sh` dependiendo de la opcion requerida, todos los comandos especificos se encuentran en el archivo de instalacion
 
-**Verificación (cliente Linux de sala)**
+#### Servidor
+1. Instalación del paquete nis con el comando `apt install nfs-kernel-server`
+2. Creacion de la carpeta a compartir con los permisos necesarios
+3. Configuracion de la exportaciones en el archivo `/etc/exports`
+4. Recargar servicios
 
-```
-sudo mount -t nfs 192.168.80.10:/srv/compartido/academicos /mnt/academicos
-df -h /mnt/academicos
-```
+#### Cliente
+1. Instalacion de los paquetes `nfs-common` y `autofs`
+2. Creacion del archivo `/etc/auto.home` para montaje automatico de las carpetas de usuario
+3. Moficicacion del archivo `/etc/auto.master` para agregar el archivo de montaje `/etc/auto.home`
+4. Reinicio de los servicios
 
-**Evidencias:** `capturas/07_nfs/`
+#### evidencias
+en `capturas/07_nfs`
 
-**Problemas encontrados y solución:** *(completar)*
+#### Problemas encontrados y solución
+- Al intentar iniciar desde el cliente con un usuario remoto del servidor nis puede ocurrir que arroje un error por no econtrar el directorio del usuario, esto a causa de que autofs no pudo montar, en tal caso es recomendable confirmar que las IPs esten bien configuradas y/o reiniciar el servicio de autofs `systemctl restart autofs`
 
 ---
 
 ## 8. Servicio NIS
 
-**Procedimiento** — script: `codigo/instalacion/05_instalar_nis.sh` (dominio `itec.local`, `ypserv` en 834, `securenets` para la LAN, mapas con contraseñas fusionadas) · alta/baja de estudiantes por lote: `codigo/configuraciones/usuarios_nis.sh`
+### Instalación
+usando el script `codigo/instalacion/05_instalar_nis.sh` dependiendo de la opcion requerida, todos los comandos especificos se encuentran en el archivo de instalacion
 
-**Verificación**
+#### Servidor
+1. Instalacion del paquete `nis`
+2. Configuracion del comportamiento del servicio en el archivo `/etc/defaults/nis`
+3. Configuracion de acceso al servicio en el archivo `/etc/ypserv.securenets`
+4. Configuracion del dominio para uso de nis
+5. Reinicio de los servicios y creacion de la lista nis 
 
+#### Cliente
+1. Instalación del paquete `nis`
+2. Configuracion del servicio nis como cliente en el archivo `/etc/defaults/nis`
+3. configuracion del archivo `/etc/nsswitch.conf` para el uso de nis como bd de usuarios y grupos
+4. asignacion del servidor nis en el archivo `yp.conf`
+5. asignacion del dominio para uso de nis
+6. reinicio de servicios `rpcbind` y `ypbind`
+
+
+#### Verificación
+desde el cliente 
 ```
 ypcat passwd                      # cuentas de estudiantes centralizadas visibles
 ypwhich                           # servidor NIS en uso
 ```
 
-**Evidencias:** `capturas/08_nis/`
+#### Evidencias
+en la carpeta `capturas/08_nis/`
 
-**Problemas encontrados y solución:** *(completar)*
+#### Problemas encontrados y solución
+- puede que al intentar iniciar con otro usuario este nos de error por que el usuario no este disponible en el momento, en tal caso es posible que tenga asignada una shell no interactiva como `/usr/sbin/nologin` basta con cambiarla por una shell valida como `/bin/bash`
+- si un usuario no se refleja en el cliente tras su creacion en el servidor nis primero debe asegurarse de que la lista de usuario haya sido regenerado con `make -C /var/yp` y desde el lado del cliente reiniciar el servicio puede ayudar a solucionar el problema `systemctl restart ypbind`
 
 ---
 
